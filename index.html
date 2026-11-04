@@ -90,6 +90,62 @@ footer{text-align:center;padding:25px;background:#04101f;color:#b9c5d3;font-size
 
   console.log("Zacki Stackfix Academy Firebase connected!");
 </script> 
+  <script type="module">
+import { initializeApp } from
+"https://www.gstatic.com/firebasejs/13.2.0/firebase-app.js";
+
+import {
+  getFirestore,
+  collection,
+  addDoc,
+  serverTimestamp
+} from
+"https://www.gstatic.com/firebasejs/13.2.0/firebase-firestore.js";
+
+const firebaseConfig = {
+  apiKey: "AIzaSyBNHpKN8PyzlPCki83WqUBl5GIHP7vstnk",
+  authDomain: "zacki-stackfix-academy.firebaseapp.com",
+  projectId: "zacki-stackfix-academy",
+  storageBucket: "zacki-stackfix-academy.firebasestorage.app",
+  messagingSenderId: "800401275558",
+  appId: "1:800401275558:web:9d65b9b30719a0f029d267",
+  measurementId: "G-C77GMHRYKX"
+};
+
+const app = initializeApp(firebaseConfig);
+const db = getFirestore(app);
+const studentsCollection = collection(db, "students");
+
+document.getElementById("studentForm")
+.addEventListener("submit", async function(e) {
+  e.preventDefault();
+
+  const message = document.getElementById("formMessage");
+  const button = this.querySelector("button");
+
+  button.disabled = true;
+  message.textContent = "Submitting registration...";
+
+  try {
+    await addDoc(studentsCollection, {
+      fullName: document.getElementById("fullName").value.trim(),
+      admissionNumber: document.getElementById("admissionNumber").value.trim(),
+      phone: document.getElementById("phone").value.trim(),
+      course: document.getElementById("course").value,
+      createdAt: serverTimestamp()
+    });
+
+    message.textContent = "Registration successful!";
+    this.reset();
+
+  } catch (error) {
+    console.error(error);
+    message.textContent = "Registration failed. Please try again.";
+  }
+
+  button.disabled = false;
+});
+</script>
   <body>
 
 <header>
