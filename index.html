@@ -32,6 +32,33 @@ h2{text-align:center;color:#f4c542;margin-bottom:25px;font-size:29px}
 footer{text-align:center;padding:25px;background:#04101f;color:#b9c5d3;font-size:13px}
 @media(max-width:600px){.hero h1{font-size:30px}header{justify-content:center;gap:12px}nav{text-align:center}}
 </style>
+  <section id="registration">
+  <h2>Student Registration</h2>
+
+  <form id="studentForm">
+    <input id="fullName" type="text"
+      placeholder="Full Name" required>
+
+    <input id="admissionNumber" type="text"
+      placeholder="Admission Number" required>
+
+    <input id="phone" type="tel"
+      placeholder="Phone Number" required>
+
+    <select id="course" required>
+      <option value="">Select Course</option>
+      <option>Artificial Intelligence</option>
+      <option>Web Development</option>
+      <option>Cloud Computing</option>
+      <option>Cybersecurity</option>
+      <option>Networking</option>
+      <option>Phone & System Settings</option>
+    </select>
+
+    <button type="submit">Register Now</button>
+    <p id="formMessage"></p>
+  </form>
+</section>
 </head>
 
 
