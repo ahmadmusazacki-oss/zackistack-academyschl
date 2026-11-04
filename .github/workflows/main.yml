@@ -1,1 +1,39 @@
 
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Zacki Stackfix Academy</title>
+<style>
+body{font-family:Arial;margin:0;background:#f4f6f4;color:#222;text-align:center}
+header{background:#063d25;color:white;padding:35px 15px}
+h1{color:#d4af37}
+section{padding:30px 15px}
+.course{background:white;margin:12px auto;padding:18px;max-width:500px;border-radius:10px}
+footer{background:#063d25;color:white;padding:20px}
+</style>
+</head>
+<body>
+<header>
+<h1>ZACKI STACKFIX ACADEMY</h1>
+<p>Learn Technology. Build Skills. Shape the Future.</p>
+</header>
+<section>
+<h2>Welcome to Our Academy</h2>
+<p>Practical technology training for everyone.</p>
+<h2>Our Courses</h2>
+<div class="course">Computer Networking</div>
+<div class="course">Cybersecurity</div>
+<div class="course">Cloud Computing</div>
+<div class="course">Artificial Intelligence</div>
+<div class="course">Software Development</div>
+</section>
+<section>
+<h2>Contact Us</h2>
+<p>Phone: 09034528400</p>
+<p>Join Zacki Stackfix Academy and start learning today!</p>
+</section>
+<footer>© 2026 Zacki Stackfix Academy</footer>
+</body>
+</html>
