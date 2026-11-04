@@ -33,7 +33,36 @@ footer{text-align:center;padding:25px;background:#04101f;color:#b9c5d3;font-size
 @media(max-width:600px){.hero h1{font-size:30px}header{justify-content:center;gap:12px}nav{text-align:center}}
 </style>
 </head>
-<body>
+
+
+<script type="module">
+  import { initializeApp } from "https://www.gstatic.com/firebasejs/13.2.0/firebase-app.js";
+
+  import {
+    getFirestore,
+    collection
+  } from "https://www.gstatic.com/firebasejs/13.2.0/firebase-firestore.js";
+
+  const firebaseConfig = {
+    apiKey: "AIzaSyBNHpKN8PyzlPCki83WqUBl5GIHP7vstnk",
+    authDomain: "zacki-stackfix-academy.firebaseapp.com",
+    projectId: "zacki-stackfix-academy",
+    storageBucket: "zacki-stackfix-academy.firebasestorage.app",
+    messagingSenderId: "800401275558",
+    appId: "1:800401275558:web:9d65b9b30719a0f029d267",
+    measurementId: "G-C77GMHRYKX"
+  };
+
+  const app = initializeApp(firebaseConfig);
+  const db = getFirestore(app);
+
+  const studentsCollection = collection(db, "students");
+
+  window.db = db;
+  window.studentsCollection = studentsCollection;
+
+  console.log("Zacki Stackfix Academy Firebase connected!");
+</script> <body>
 
 <header>
 <div class="logo">ZACKI STACKFIX ACADEMY</div>
