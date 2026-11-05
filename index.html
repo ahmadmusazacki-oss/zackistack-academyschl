@@ -146,6 +146,35 @@ document.getElementById("studentForm")
   button.disabled = false;
 });
 </script>
+
+<script type="module">
+  import { initializeApp } from "https://www.gstatic.com/firebasejs/13.2.0/firebase-app.js";
+
+  import {
+    getFirestore,
+    collection
+  } from "https://www.gstatic.com/firebasejs/13.2.0/firebase-firestore.js";
+
+  const firebaseConfig = {
+    apiKey: "AIzaSyBNHpKN8PyzlPCki83WqUBl5GIHP7vstnk",
+    authDomain: "zacki-stackfix-academy.firebaseapp.com",
+    projectId: "zacki-stackfix-academy",
+    storageBucket: "zacki-stackfix-academy.firebasestorage.app",
+    messagingSenderId: "800401275558",
+    appId: "1:800401275558:web:9d65b9b30719a0f029d267",
+    measurementId: "G-C77GMHRYKX"
+  };
+
+  const app = initializeApp(firebaseConfig);
+  const db = getFirestore(app);
+
+  const studentsCollection = collection(db, "Students");
+
+  window.db = db;
+  window.studentsCollection = studentsCollection;
+
+  console.log("Zacki Stackfix Academy Firebase connected!");
+</script>
   <body>
 
 <header>
