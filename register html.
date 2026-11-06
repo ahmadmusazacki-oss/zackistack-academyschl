@@ -1,0 +1,166 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Student Registration | Zacki Stackfix Academy</title>
+<style>
+*{box-sizing:border-box}
+body{margin:0;font-family:Arial,sans-serif;background:#f3f5f9;color:#222}
+header{background:#101b35;color:white;text-align:center;padding:22px}
+header h2{color:#d4af37;margin:0}
+main{max-width:550px;margin:30px auto;padding:15px}
+.card{background:white;padding:25px;border-radius:12px;box-shadow:0 3px 14px #0001}
+h1{color:#101b35}
+label{display:block;font-weight:bold;margin-top:14px}
+input,select{width:100%;padding:13px;margin-top:7px;border:1px solid #ccc;border-radius:7px;font-size:16px}
+button{width:100%;padding:14px;margin-top:20px;background:#101b35;color:white;border:0;border-radius:7px;font-size:16px;font-weight:bold}
+#message{display:none;padding:12px;margin-top:15px;border-radius:7px;overflow-wrap:anywhere}
+footer{text-align:center;padding:20px;color:#666}
+</style>
+</head>
+<body>
+
+<header>
+<h2>ZACKI STACKFIX ACADEMY</h2>
+<p>Official Student Registration Portal</p>
+</header>
+
+<main>
+<div class="card">
+<h1>Student Registration</h1>
+<p>Complete the form to create your student account.</p>
+
+<div id="message"></div>
+
+<form id="registrationForm">
+
+<label>Full Name</label>
+<input id="fullName" required placeholder="Enter your full name">
+
+<label>Email Address</label>
+<input id="email" type="email" required placeholder="Enter your email">
+
+<label>Phone Number</label>
+<input id="phone" type="tel" required placeholder="Enter your phone number">
+
+<label>Select Course</label>
+<select id="course" required>
+<option value="">Choose your course</option>
+<option>AI Development</option>
+<option>Cybersecurity</option>
+<option>Network Security</option>
+<option>Computer Networking</option>
+<option>Cloud Computing</option>
+<option>Web Development</option>
+</select>
+
+<label>Create Password</label>
+<input id="password" type="password" minlength="6" required placeholder="At least 6 characters">
+
+<button id="submitButton" type="submit">Register Now</button>
+</form>
+</div>
+</main>
+
+<footer>
+© 2026 Zacki Stackfix Academy. All Rights Reserved.
+</footer>
+
+<script type="module">
+import {initializeApp} from "https://www.gstatic.com/firebasejs/10.14.1/firebase-app.js";
+
+import {
+getAuth,
+createUserWithEmailAndPassword,
+signOut
+} from "https://www.gstatic.com/firebasejs/10.14.1/firebase-auth.js";
+
+import {
+getFirestore,
+doc,
+setDoc,
+serverTimestamp
+} from "https://www.gstatic.com/firebasejs/10.14.1/firebase-firestore.js";
+
+const firebaseConfig = {
+apiKey:"AIzaSyBNHpKN8PyzlPCki83WqUBl5GIHP7vstnk",
+authDomain:"zacki-stackfix-academy.firebaseapp.com",
+projectId:"zacki-stackfix-academy",
+storageBucket:"zacki-stackfix-academy.firebasestorage.app",
+messagingSenderId:"800401275558",
+appId:"1:800401275558:web:9d65b9b30719a0f029d267",
+measurementId:"G-C77GMHRYKX"
+};
+
+const app = initializeApp(firebaseConfig);
+const auth = getAuth(app);
+const db = getFirestore(app);
+
+const form = document.getElementById("registrationForm");
+const messageBox = document.getElementById("message");
+const button = document.getElementById("submitButton");
+
+function showMessage(text,success=false){
+messageBox.style.display="block";
+messageBox.style.background=success?"#d1e7dd":"#f8d7da";
+messageBox.style.color=success?"#0f5132":"#842029";
+messageBox.textContent=text;
+}
+
+form.addEventListener("submit",async function(e){
+e.preventDefault();
+
+button.disabled=true;
+button.textContent="Please wait...";
+
+const fullName=document.getElementById("fullName").value.trim();
+const email=document.getElementById("email").value.trim();
+const phone=document.getElementById("phone").value.trim();
+const course=document.getElementById("course").value;
+const password=document.getElementById("password").value;
+
+try{
+
+const result=await createUserWithEmailAndPassword(
+auth,email,password
+);
+
+await setDoc(doc(db,"students",result.user.uid),{
+fullName:fullName,
+email:email,
+phone:phone,
+course:course,
+status:"Pending",
+createdAt:serverTimestamp()
+});
+
+await signOut(auth);
+
+form.reset();
+
+showMessage(
+"Registration successful! Your student account has been created.",
+true
+);
+
+}catch(error){
+
+let errorMessage=error.message;
+
+if(error.code==="auth/email-already-in-use"){
+errorMessage="This email is already registered. Please use another email.";
+}
+
+showMessage(errorMessage);
+
+}finally{
+button.disabled=false;
+button.textContent="Register Now";
+}
+
+});
+</script>
+</body>
+</html>
