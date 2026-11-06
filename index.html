@@ -5,39 +5,33 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Zacki Stackfix Academy</title>
-
 <style>
-*{box-sizing:border-box;margin:0;padding:0}
-body{font-family:Arial,sans-serif;background:#071426;color:white;line-height:1.6}
-header{padding:22px 7%;background:#0c2038;display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap}
-.logo{font-size:21px;font-weight:bold;color:#f4c542}
-nav a{color:white;text-decoration:none;margin:8px}
-section{padding:55px 8%}
-h2{text-align:center;color:#f4c542;margin-bottom:25px}
-.hero{text-align:center;background:linear-gradient(135deg,#102b4a,#071426);padding:85px 8%}
-.hero h1{font-size:35px;margin-bottom:15px}
-.hero span{color:#f4c542}
-.intro{text-align:center;color:#d5dfeb}
-.courses{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:18px;margin-top:30px}
-.course{background:#102641;padding:25px;border-radius:12px;border:1px solid #29415c}
-.course h3{color:#f4c542}
-.course p{color:#d5dfeb;font-size:14px}
-.login{max-width:450px;margin:auto;background:#102641;padding:28px;border-radius:12px}
-.login input{width:100%;padding:14px;margin:10px 0;border:1px solid #52647b;border-radius:6px;font-size:16px}
-button{background:#f4c542;color:#071426;padding:13px 22px;border:0;border-radius:6px;font-weight:bold;cursor:pointer}
-.login button{width:100%;margin-top:12px}
-.message{text-align:center;margin-top:15px;color:#f4c542}
-#adminPanel{display:none;text-align:center;margin-top:20px}
-footer{text-align:center;padding:25px;background:#04101f;color:#b9c5d3}
-.btn{display:inline-block;background:#f4c542;color:#071426;padding:13px 23px;border-radius:7px;text-decoration:none;font-weight:bold}
-@media(max-width:600px){header{justify-content:center;gap:12px}.hero h1{font-size:28px}}
+*{box-sizing:border-box}
+body{margin:0;font-family:Arial;background:#071426;color:white;line-height:1.5}
+header{padding:20px;background:#102641;display:flex;justify-content:space-between;flex-wrap:wrap}
+.logo,h2,h3{color:#f4c542}
+nav a{color:white;margin:8px;text-decoration:none}
+section{padding:35px 7%}
+.hero{text-align:center;background:#102b4a;padding:65px 15px}
+.hero h1{font-size:32px}
+.courses,.records{display:grid;grid-template-columns:repeat(auto-fit,minmax(210px,1fr));gap:15px}
+.card,.panel{background:#102641;border:1px solid #29415c;border-radius:10px;padding:18px;margin:10px 0}
+button,.btn{background:#f4c542;color:#071426;border:0;padding:12px 17px;border-radius:6px;font-weight:bold;cursor:pointer}
+input,textarea{width:100%;padding:12px;margin:7px 0 14px;border-radius:5px;border:1px solid #aaa;font-size:16px}
+label{display:block}
+#dashboard{display:none}
+.menu{display:flex;flex-wrap:wrap;gap:7px;margin:15px 0}
+.menu button{background:#29415c;color:white}
+.menu button.active{background:#f4c542;color:#071426}
+.message{color:#f4c542;overflow-wrap:anywhere}
+footer{text-align:center;background:#04101f;padding:20px}
+@media(max-width:600px){.hero h1{font-size:25px}}
 </style>
 </head>
-
 <body>
 
 <header>
-<div class="logo">ZACKI STACKFIX ACADEMY</div>
+<div class="logo"><b>ZACKI STACKFIX ACADEMY</b></div>
 <nav>
 <a href="#home">Home</a>
 <a href="#courses">Courses</a>
@@ -47,179 +41,249 @@ footer{text-align:center;padding:25px;background:#04101f;color:#b9c5d3}
 </header>
 
 <section class="hero" id="home">
-<h1>Welcome to <span>Zacki Stackfix Academy</span></h1>
-<p>Learn technology, develop practical skills and prepare for the digital future.</p>
-<br>
+<h1>Welcome to Zacki Stackfix Academy</h1>
+<p>Technology • Innovation • Skills</p>
+<p>Professional Six-Month Technology Training</p>
 <a class="btn" href="#courses">Explore Courses</a>
 </section>
 
 <section id="courses">
 <h2>Our Courses</h2>
-<p class="intro">Professional six-month technology training.</p>
-
 <div class="courses">
-<div class="course">
-<h3>AI Development</h3>
-<p>Artificial intelligence, prompts and chatbot development.</p>
-</div>
-<div class="course">
-<h3>Cybersecurity</h3>
-<p>Cybersecurity fundamentals and digital protection.</p>
-</div>
-<div class="course">
-<h3>Network Security</h3>
-<p>Network protection and security configuration.</p>
-</div>
-<div class="course">
-<h3>Computer Networking</h3>
-<p>Networking, configuration and troubleshooting.</p>
-</div>
-<div class="course">
-<h3>Cloud Computing</h3>
-<p>Cloud technology and modern computing.</p>
-</div>
-<div class="course">
-<h3>Web Development</h3>
-<p>HTML, CSS and JavaScript development.</p>
-</div>
+<div class="card"><h3>AI Development</h3><p>Artificial intelligence and chatbot development.</p></div>
+<div class="card"><h3>Cybersecurity</h3><p>Digital protection and security.</p></div>
+<div class="card"><h3>Network Security</h3><p>Network protection and configuration.</p></div>
+<div class="card"><h3>Computer Networking</h3><p>Networking and troubleshooting.</p></div>
+<div class="card"><h3>Cloud Computing</h3><p>Modern cloud technology.</p></div>
+<div class="card"><h3>Web Development</h3><p>HTML, CSS and JavaScript.</p></div>
 </div>
 </section>
 
 <section id="about">
 <h2>About Our Academy</h2>
-<p class="intro">
-Zacki Stackfix Academy provides professional technology
-training and practical digital skills for learners.
-Our training programme lasts six months.
-</p>
+<p>We provide professional technology training and practical digital skills through a six-month programme.</p>
 </section>
 
 <section id="admin">
 <h2>Administrator Login</h2>
-
-<div class="login">
-<form id="adminLogin">
-<input
-type="email"
-id="adminEmail"
-placeholder="Administrator Email"
-value="ahmadmusazacki@gmail.com"
-required>
-
-<input
-type="password"
-id="adminPassword"
-placeholder="Enter your Firebase password"
-required>
-
-<button type="submit" id="loginButton">
-Login as Administrator
-</button>
+<div class="panel">
+<form id="loginForm">
+<label>Email address</label>
+<input type="email" id="email" value="ahmadmusazacki@gmail.com" required>
+<label>Password</label>
+<input type="password" id="password" placeholder="Firebase password" required>
+<button type="submit" id="loginBtn">Login as Administrator</button>
 </form>
-
 <p class="message" id="loginMessage"></p>
-
-<div id="adminPanel">
-<h3>Welcome, Administrator!</h3>
-<p>Your administrator account has been verified.</p>
-<br>
-<button id="logoutButton">Logout</button>
-</div>
 </div>
 </section>
 
+<section id="dashboard">
+<h2>Administrator Dashboard</h2>
+<p id="welcome"></p>
+<button id="logout">Logout</button>
+
+<div class="menu" id="menu"></div>
+
+<div class="panel">
+<h3 id="moduleTitle">Students</h3>
+<form id="recordForm">
+<div id="fields"></div>
+<button type="submit" id="saveBtn">Save Record</button>
+</form>
+<p class="message" id="recordMessage"></p>
+</div>
+
+<h3>Saved Records</h3>
+<button id="refresh">Refresh Records</button>
+<div class="records" id="records"></div>
+</section>
+
 <footer>
-<p>© 2026 Zacki Stackfix Academy. All rights reserved.</p>
-<p>Technology • Innovation • Skills</p>
+<p>© 2026 Zacki Stackfix Academy</p>
 </footer>
 
 <script type="module">
-import { initializeApp } from
-"https://www.gstatic.com/firebasejs/10.14.1/firebase-app.js";
+import {initializeApp}
+from "https://www.gstatic.com/firebasejs/10.14.1/firebase-app.js";
 
 import {
-  getAuth,
-  signInWithEmailAndPassword,
-  signOut
-} from
-"https://www.gstatic.com/firebasejs/10.14.1/firebase-auth.js";
+getAuth,signInWithEmailAndPassword,signOut,onAuthStateChanged
+} from "https://www.gstatic.com/firebasejs/10.14.1/firebase-auth.js";
 
 import {
-  getFirestore,
-  doc,
-  getDoc
-} from
-"https://www.gstatic.com/firebasejs/10.14.1/firebase-firestore.js";
+getFirestore,doc,getDoc,collection,addDoc,getDocs,serverTimestamp
+} from "https://www.gstatic.com/firebasejs/10.14.1/firebase-firestore.js";
 
-const firebaseConfig = {
-  apiKey: "AIzaSyBNHpKN8PyzlPCki83WqUBl5GIHP7vstnk",
-  authDomain: "zacki-stackfix-academy.firebaseapp.com",
-  projectId: "zacki-stackfix-academy",
-  storageBucket: "zacki-stackfix-academy.firebasestorage.app",
-  messagingSenderId: "800401275558",
-  appId: "1:800401275558:web:9d65b9b30719a0f029d267",
-  measurementId: "G-C77GMHRYKX"
+const firebaseConfig={
+apiKey:"AIzaSyBNHpKN8PyzlPCki83WqUBl5GIHP7vstnk",
+authDomain:"zacki-stackfix-academy.firebaseapp.com",
+projectId:"zacki-stackfix-academy",
+storageBucket:"zacki-stackfix-academy.firebasestorage.app",
+messagingSenderId:"800401275558",
+appId:"1:800401275558:web:9d65b9b30719a0f029d267",
+measurementId:"G-C77GMHRYKX"
 };
 
-const app = initializeApp(firebaseConfig);
-const auth = getAuth(app);
-const db = getFirestore(app);
+const app=initializeApp(firebaseConfig);
+const auth=getAuth(app);
+const db=getFirestore(app);
 
-const loginForm = document.getElementById("adminLogin");
-const message = document.getElementById("loginMessage");
-const loginButton = document.getElementById("loginButton");
-const adminPanel = document.getElementById("adminPanel");
+const modules={
+students:["fullName","admissionNumber","phone","gender","dateOfBirth","parentName","parentPhone","address","status"],
+teachers:["fullName","teacherID","phone","email","subject","status"],
+departments:["departmentName","departmentCode","description","status"],
+programmes:["programmeName","programmeCode","department","duration","qualification","status"],
+courses:["courseName","courseCode","description","duration","status"],
+enrollments:["studentName","admissionNumber","course","enrollmentDate","duration","status"],
+results:["studentName","admissionNumber","course","score","grade","session","remark"],
+attendance:["studentName","admissionNumber","course","date","attendanceStatus"],
+fees:["studentName","admissionNumber","amount","paid","balance","paymentDate","status"],
+certificates:["studentName","admissionNumber","course","certificateNumber","issueDate","status"],
+announcements:["title","message","date","status"]
+};
 
-loginForm.addEventListener("submit", async (event) => {
-  event.preventDefault();
+let current="students";
+const el=id=>document.getElementById(id);
 
-  const email = document.getElementById("adminEmail").value.trim();
-  const password = document.getElementById("adminPassword").value;
+function showDashboard(user){
+el("admin").style.display="none";
+el("dashboard").style.display="block";
+el("welcome").textContent="Welcome, "+(user.email||"Administrator");
+buildMenu();
+buildForm();
+loadRecords();
+}
 
-  loginButton.disabled = true;
-  message.textContent = "Checking administrator account...";
+function buildMenu(){
+const menu=el("menu");
+menu.innerHTML="";
+Object.keys(modules).forEach(name=>{
+const button=document.createElement("button");
+button.textContent=name.charAt(0).toUpperCase()+name.slice(1);
+if(name===current)button.classList.add("active");
+button.onclick=()=>{
+current=name;
+buildMenu();
+buildForm();
+loadRecords();
+};
+menu.appendChild(button);
+});
+}
 
-  try {
-    const result = await signInWithEmailAndPassword(
-      auth,
-      email,
-      password
-    );
+function buildForm(){
+el("moduleTitle").textContent=current.toUpperCase();
+const fields=el("fields");
+fields.innerHTML="";
+modules[current].forEach(name=>{
+const label=document.createElement("label");
+label.textContent=name;
+const input=document.createElement(
+["description","address","message"].includes(name)?"textarea":"input"
+);
+input.name=name;
+input.id="field_"+name;
+input.placeholder=name;
+if(["date","dateOfBirth","enrollmentDate","paymentDate","issueDate"].includes(name)){
+input.type="date";
+}
+fields.append(label,input);
+});
+}
 
-    const user = result.user;
+async function loadRecords(){
+el("records").innerHTML="Loading...";
+el("recordMessage").textContent="";
+try{
+const snapshot=await getDocs(collection(db,current));
+el("records").innerHTML="";
+if(snapshot.empty){
+el("records").textContent="No records yet.";
+return;
+}
+snapshot.forEach(item=>{
+const card=document.createElement("div");
+card.className="card";
+const data=item.data();
+Object.entries(data).forEach(([key,value])=>{
+if(key==="createdAt")return;
+const p=document.createElement("p");
+p.textContent=key+": "+String(value);
+card.appendChild(p);
+});
+el("records").appendChild(card);
+});
+}catch(error){
+el("records").textContent="Unable to load: "+error.message;
+}
+}
 
-    const userRef = doc(db, "users", user.uid);
-    const userSnapshot = await getDoc(userRef);
-
-    if (!userSnapshot.exists() ||
-        userSnapshot.data().role !== "Admin") {
-      await signOut(auth);
-      throw new Error("This account does not have administrator permission.");
-    }
-
-    message.textContent = "Administrator login successful!";
-    loginForm.style.display = "none";
-    adminPanel.style.display = "block";
-
-  } catch (error) {
-    console.error(error);
-    message.textContent =
-      error.message === "This account does not have administrator permission."
-      ? error.message
-      : "Login failed. Check your email and password.";
-  }
-
-  loginButton.disabled = false;
+el("loginForm").addEventListener("submit",async event=>{
+event.preventDefault();
+el("loginBtn").disabled=true;
+el("loginMessage").textContent="Checking account...";
+try{
+const result=await signInWithEmailAndPassword(
+auth,el("email").value.trim(),el("password").value
+);
+const adminDoc=await getDoc(doc(db,"users",result.user.uid));
+if(!adminDoc.exists()||adminDoc.data().role!=="Admin"){
+await signOut(auth);
+throw new Error("Administrator permission not found.");
+}
+showDashboard(result.user);
+}catch(error){
+el("loginMessage").textContent="Login error: "+error.message;
+}finally{
+el("loginBtn").disabled=false;
+}
 });
 
-document.getElementById("logoutButton").addEventListener("click", async () => {
-  await signOut(auth);
-  adminPanel.style.display = "none";
-  loginForm.style.display = "block";
-  loginForm.reset();
-  message.textContent = "You have logged out.";
+el("recordForm").addEventListener("submit",async event=>{
+event.preventDefault();
+el("saveBtn").disabled=true;
+el("recordMessage").textContent="Saving...";
+try{
+const data={};
+modules[current].forEach(name=>{
+const value=el("field_"+name).value.trim();
+if(value)data[name]=value;
+});
+data.createdAt=serverTimestamp();
+await addDoc(collection(db,current),data);
+el("recordForm").reset();
+el("recordMessage").textContent="Record saved successfully!";
+await loadRecords();
+}catch(error){
+el("recordMessage").textContent="Save failed: "+error.message;
+}finally{
+el("saveBtn").disabled=false;
+}
+});
+
+el("refresh").onclick=loadRecords;
+
+el("logout").onclick=async()=>{
+await signOut(auth);
+el("dashboard").style.display="none";
+el("admin").style.display="block";
+el("loginMessage").textContent="You have logged out.";
+};
+
+onAuthStateChanged(auth,async user=>{
+if(!user)return;
+try{
+const adminDoc=await getDoc(doc(db,"users",user.uid));
+if(adminDoc.exists()&&adminDoc.data().role==="Admin"){
+showDashboard(user);
+}else{
+await signOut(auth);
+}
+}catch(error){
+console.error(error);
+}
 });
 </script>
-
 </body>
 </html>
