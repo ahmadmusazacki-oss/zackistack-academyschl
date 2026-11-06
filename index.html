@@ -1,10 +1,12 @@
 
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Zacki Stackfix Academy</title>
+
 <style>
 *{box-sizing:border-box}
 body{margin:0;font-family:Arial,sans-serif;background:#f4f6fa;color:#222}
@@ -32,8 +34,13 @@ th,td{padding:10px;border:1px solid #ddd;text-align:left}
 th{background:#101b35;color:white}
 footer{background:#101b35;color:white;text-align:center;padding:22px;margin-top:30px}
 .small{font-size:13px;color:#666}
+.portal-section{margin-top:22px}
+.portal-section h3{color:#101b35;border-bottom:2px solid #d4af37;padding-bottom:8px}
+.record,.resource{background:#f4f6fa;padding:12px;border-radius:7px;margin:10px 0}
+.resource a{color:#174b91;overflow-wrap:anywhere}
 </style>
 </head>
+
 <body>
 
 <header>
@@ -79,10 +86,13 @@ footer{background:#101b35;color:white;text-align:center;padding:22px;margin-top:
 <form id="registerForm">
 <label>Full Name</label>
 <input id="regName" required placeholder="Enter your full name">
+
 <label>Email Address</label>
 <input id="regEmail" type="email" required placeholder="Enter your email">
+
 <label>Phone Number</label>
 <input id="regPhone" required placeholder="Enter your phone number">
+
 <label>Select Course</label>
 <select id="regCourse" required>
 <option value="">Choose a course</option>
@@ -93,8 +103,10 @@ footer{background:#101b35;color:white;text-align:center;padding:22px;margin-top:
 <option>Cloud Computing</option>
 <option>Web Development</option>
 </select>
+
 <label>Create Password</label>
 <input id="regPassword" type="password" minlength="6" required placeholder="At least 6 characters">
+
 <button class="action" type="submit">Create Student Account</button>
 </form>
 <p class="small">Your password is securely managed by Firebase Authentication.</p>
@@ -107,13 +119,17 @@ footer{background:#101b35;color:white;text-align:center;padding:22px;margin-top:
 <div class="card">
 <h2>Student Login</h2>
 <div id="studentMessage"></div>
+
 <form id="studentLoginForm">
 <label>Email Address</label>
 <input id="studentEmail" type="email" required>
+
 <label>Password</label>
 <input id="studentPassword" type="password" required>
+
 <button class="action" type="submit">Login</button>
 </form>
+
 <div id="studentProfile" class="hidden"></div>
 </div>
 </div>
@@ -124,11 +140,14 @@ footer{background:#101b35;color:white;text-align:center;padding:22px;margin-top:
 <div class="card">
 <h2>Administrator Login</h2>
 <div id="adminMessage"></div>
+
 <form id="adminLoginForm">
 <label>Admin Email</label>
 <input id="adminEmail" type="email" required>
+
 <label>Password</label>
 <input id="adminPassword" type="password" required>
+
 <button class="action" type="submit">Admin Login</button>
 </form>
 </div>
@@ -137,19 +156,23 @@ footer{background:#101b35;color:white;text-align:center;padding:22px;margin-top:
 
 <section id="dashboard" class="hidden">
 <div class="container">
+
 <div class="card">
 <h2>Administrator Dashboard</h2>
 <p>Welcome to Zacki Stackfix Academy administration.</p>
 <button class="action" onclick="adminLogout()">Logout</button>
 </div>
+
 <div class="card">
 <h3>Dashboard Modules</h3>
 <div id="dashboardCards" class="grid"></div>
 </div>
+
 <div class="card">
 <h2 id="moduleTitle">Student Records</h2>
 <div id="moduleMessage"></div>
 <div id="moduleFormArea"></div>
+
 <div class="table-wrap">
 <table>
 <thead id="tableHead"></thead>
@@ -157,6 +180,7 @@ footer{background:#101b35;color:white;text-align:center;padding:22px;margin-top:
 </table>
 </div>
 </div>
+
 </div>
 </section>
 
@@ -166,14 +190,27 @@ footer{background:#101b35;color:white;text-align:center;padding:22px;margin-top:
 </footer>
 
 <script type="module">
+
 import {initializeApp} from "https://www.gstatic.com/firebasejs/10.14.1/firebase-app.js";
+
 import {
- getAuth,createUserWithEmailAndPassword,
- signInWithEmailAndPassword,signOut
+ getAuth,
+ createUserWithEmailAndPassword,
+ signInWithEmailAndPassword,
+ signOut
 } from "https://www.gstatic.com/firebasejs/10.14.1/firebase-auth.js";
+
 import {
- getFirestore,doc,getDoc,setDoc,
- collection,addDoc,getDocs,serverTimestamp
+ getFirestore,
+ doc,
+ getDoc,
+ setDoc,
+ collection,
+ addDoc,
+ getDocs,
+ serverTimestamp,
+ query,
+ where
 } from "https://www.gstatic.com/firebasejs/10.14.1/firebase-firestore.js";
 
 const firebaseConfig={
@@ -191,8 +228,12 @@ const auth=getAuth(app);
 const db=getFirestore(app);
 
 const courses=[
- "AI Development","Cybersecurity","Network Security",
- "Computer Networking","Cloud Computing","Web Development"
+ "AI Development",
+ "Cybersecurity",
+ "Network Security",
+ "Computer Networking",
+ "Cloud Computing",
+ "Web Development"
 ];
 
 const modules={
@@ -201,18 +242,21 @@ const modules={
  departments:["departmentName","departmentCode","description","status"],
  programmes:["programmeName","programmeCode","department","duration","qualification","status"],
  courses:["courseName","courseCode","description","duration","status"],
- enrollments:["studentName","admissionNumber","course","enrollmentDate","duration","status"],
- results:["studentName","admissionNumber","course","score","grade","session","remark"],
+ enrollments:["studentName","studentEmail","admissionNumber","course","enrollmentDate","duration","status"],
+ results:["studentName","studentEmail","admissionNumber","course","score","grade","session","remark"],
  attendance:["studentName","admissionNumber","course","date","attendanceStatus"],
  fees:["studentName","admissionNumber","amount","paid","balance","paymentDate","status"],
  certificates:["studentName","admissionNumber","course","certificateNumber","issueDate","status"],
- announcements:["title","message","date","status"]
+ announcements:["title","message","date","status"],
+ materials:["title","course","description","resourceUrl","status"]
 };
 
 let currentModule="students";
 
 window.showPage=function(page){
- document.querySelectorAll("body > section").forEach(s=>s.classList.add("hidden"));
+ document.querySelectorAll("body > section").forEach(section=>{
+  section.classList.add("hidden");
+ });
  document.getElementById(page).classList.remove("hidden");
  window.scrollTo(0,0);
 };
@@ -230,17 +274,24 @@ function showMessage(id,text,type="notice"){
 
 function escapeHtml(value){
  return String(value??"").replace(/[&<>"']/g,c=>({
- "&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"
+ "&":"&amp;",
+ "<":"&lt;",
+ ">":"&gt;",
+ '"':"&quot;",
+ "'":"&#39;"
  }[c]));
 }
 
+/* DISPLAY COURSES */
 function renderCourses(){
- const html=courses.map(c=>`
+ const html=courses.map(course=>`
  <div class="card">
- <h3>${c}</h3>
+ <h3>${escapeHtml(course)}</h3>
  <p>Practical training and skill development.</p>
  <button class="action" onclick="showPage('register')">Apply Now</button>
- </div>`).join("");
+ </div>
+ `).join("");
+
  document.getElementById("homeCourses").innerHTML=html;
  document.getElementById("courseList").innerHTML=html;
 }
@@ -251,13 +302,14 @@ document.getElementById("registerForm").addEventListener("submit",async e=>{
  e.preventDefault();
 
  const name=document.getElementById("regName").value.trim();
- const email=document.getElementById("regEmail").value.trim();
+ const email=document.getElementById("regEmail").value.trim().toLowerCase();
  const phone=document.getElementById("regPhone").value.trim();
  const course=document.getElementById("regCourse").value;
  const password=document.getElementById("regPassword").value;
 
  try{
   showMessage("registerMessage","Creating your student account...");
+
   const result=await createUserWithEmailAndPassword(auth,email,password);
 
   await setDoc(doc(db,"students",result.user.uid),{
@@ -271,7 +323,9 @@ document.getElementById("registerForm").addEventListener("submit",async e=>{
 
   await signOut(auth);
   e.target.reset();
+
   showMessage("registerMessage","Registration successful! You can now log in as a student.","success");
+
  }catch(error){
   showMessage("registerMessage",error.message,"error");
  }
@@ -281,11 +335,12 @@ document.getElementById("registerForm").addEventListener("submit",async e=>{
 document.getElementById("studentLoginForm").addEventListener("submit",async e=>{
  e.preventDefault();
 
- const email=document.getElementById("studentEmail").value.trim();
+ const email=document.getElementById("studentEmail").value.trim().toLowerCase();
  const password=document.getElementById("studentPassword").value;
 
  try{
   showMessage("studentMessage","Signing in...");
+
   const result=await signInWithEmailAndPassword(auth,email,password);
   const snap=await getDoc(doc(db,"students",result.user.uid));
 
@@ -298,26 +353,167 @@ document.getElementById("studentLoginForm").addEventListener("submit",async e=>{
   const profile=document.getElementById("studentProfile");
 
   profile.innerHTML=`
-   <h3>Welcome, ${escapeHtml(data.fullName)}</h3>
-   <p><b>Email:</b> ${escapeHtml(data.email)}</p>
-   <p><b>Phone:</b> ${escapeHtml(data.phone)}</p>
-   <p><b>Course:</b> ${escapeHtml(data.course)}</p>
-   <p><b>Registration Status:</b> ${escapeHtml(data.status)}</p>
-   <button class="action" id="studentLogout">Logout</button>`;
+   <h2>Welcome, ${escapeHtml(data.fullName)}</h2>
+
+   <div class="portal-section">
+    <h3>My Profile</h3>
+    <p><b>Email:</b> ${escapeHtml(data.email)}</p>
+    <p><b>Phone:</b> ${escapeHtml(data.phone)}</p>
+    <p><b>Course:</b> ${escapeHtml(data.course)}</p>
+    <p><b>Registration Status:</b> ${escapeHtml(data.status)}</p>
+   </div>
+
+   <div class="portal-section">
+    <h3>My Enrolled Courses</h3>
+    <div id="myEnrollments">Loading courses...</div>
+   </div>
+
+   <div class="portal-section">
+    <h3>My Results and Grades</h3>
+    <div id="myResults">Loading results...</div>
+   </div>
+
+   <div class="portal-section">
+    <h3>Academy Announcements</h3>
+    <div id="myAnnouncements">Loading announcements...</div>
+   </div>
+
+   <div class="portal-section">
+    <h3>Learning Materials</h3>
+    <div id="myMaterials">Loading materials...</div>
+   </div>
+
+   <button class="action" id="studentLogout">Logout</button>
+  `;
 
   profile.classList.remove("hidden");
+  document.getElementById("studentLoginForm").classList.add("hidden");
 
   document.getElementById("studentLogout").onclick=async()=>{
    await signOut(auth);
    profile.classList.add("hidden");
+   document.getElementById("studentLoginForm").classList.remove("hidden");
    showMessage("studentMessage","You have logged out.","success");
   };
 
   showMessage("studentMessage","Student login successful.","success");
+
+  await loadStudentRecords(email);
+  await loadPublishedRecords();
+
  }catch(error){
   showMessage("studentMessage",error.message,"error");
  }
 });
+
+/* LOAD STUDENT ENROLLMENTS AND RESULTS */
+async function loadStudentRecords(email){
+
+ const targets=[
+  {
+   collectionName:"enrollments",
+   element:"myEnrollments",
+   fields:["course","enrollmentDate","duration","status"]
+  },
+  {
+   collectionName:"results",
+   element:"myResults",
+   fields:["course","score","grade","session","remark"]
+  }
+ ];
+
+ for(const target of targets){
+  const output=document.getElementById(target.element);
+
+  try{
+   const q=query(
+    collection(db,target.collectionName),
+    where("studentEmail","==",email)
+   );
+
+   const snapshot=await getDocs(q);
+
+   if(snapshot.empty){
+    output.innerHTML="<p>No records available yet.</p>";
+    continue;
+   }
+
+   output.innerHTML=snapshot.docs.map(d=>{
+    const data=d.data();
+
+    return `<div class="record">
+     ${target.fields.map(field=>`
+      <p><b>${labelName(field)}:</b> ${escapeHtml(data[field]??"Not provided")}</p>
+     `).join("")}
+    </div>`;
+   }).join("");
+
+  }catch(error){
+   output.textContent="Unable to load this section: "+error.message;
+  }
+ }
+}
+
+/* LOAD PUBLISHED ANNOUNCEMENTS AND MATERIALS */
+async function loadPublishedRecords(){
+
+ const targets=[
+  {
+   collectionName:"announcements",
+   element:"myAnnouncements",
+   fields:["title","message","date"]
+  },
+  {
+   collectionName:"materials",
+   element:"myMaterials",
+   fields:["title","course","description","resourceUrl"]
+  }
+ ];
+
+ for(const target of targets){
+  const output=document.getElementById(target.element);
+
+  try{
+   const q=query(
+    collection(db,target.collectionName),
+    where("status","==","Published")
+   );
+
+   const snapshot=await getDocs(q);
+
+   if(snapshot.empty){
+    output.innerHTML="<p>No published records available yet.</p>";
+    continue;
+   }
+
+   output.innerHTML=snapshot.docs.map(d=>{
+    const data=d.data();
+
+    let content=target.fields.map(field=>{
+
+     if(field==="resourceUrl"){
+      const url=String(data[field]??"");
+
+      if(url.startsWith("https://")){
+       return `<p><b>Resource:</b>
+       <a href="${escapeHtml(url)}" target="_blank" rel="noopener noreferrer">
+       Open learning material</a></p>`;
+      }
+
+      return "";
+     }
+
+     return `<p><b>${labelName(field)}:</b> ${escapeHtml(data[field]??"")}</p>`;
+    }).join("");
+
+    return `<div class="resource">${content}</div>`;
+   }).join("");
+
+  }catch(error){
+   output.textContent="Unable to load this section: "+error.message;
+  }
+ }
+}
 
 /* ADMIN LOGIN */
 document.getElementById("adminLoginForm").addEventListener("submit",async e=>{
@@ -328,6 +524,7 @@ document.getElementById("adminLoginForm").addEventListener("submit",async e=>{
 
  try{
   showMessage("adminMessage","Checking administrator account...");
+
   const result=await signInWithEmailAndPassword(auth,email,password);
   const userSnap=await getDoc(doc(db,"users",result.user.uid));
 
@@ -340,6 +537,7 @@ document.getElementById("adminLoginForm").addEventListener("submit",async e=>{
   showPage("dashboard");
   renderDashboard();
   await loadModule("students");
+
  }catch(error){
   showMessage("adminMessage",error.message,"error");
  }
@@ -351,69 +549,91 @@ function renderDashboard(){
  Object.keys(modules).map(key=>`
  <button class="action" onclick="loadModule('${key}')">
  ${labelName(key)}
- </button>`).join("");
+ </button>
+ `).join("");
 }
 
 window.loadModule=async function(name){
+
  if(!modules[name])return;
+
  if(!auth.currentUser){
   showPage("adminLogin");
   return;
  }
 
  currentModule=name;
+
  document.getElementById("moduleTitle").textContent=labelName(name);
+ document.getElementById("moduleMessage").textContent="";
 
  const fields=modules[name];
 
  document.getElementById("moduleFormArea").innerHTML=`
  <h3>Add ${labelName(name)}</h3>
+
  <form id="recordForm">
  ${fields.map(field=>`
  <label>${labelName(field)}</label>
  <input name="${field}" placeholder="Enter ${labelName(field)}">
  `).join("")}
+
  <button class="action" type="submit">Save Record</button>
- </form>`;
+ </form>
+ `;
 
  document.getElementById("recordForm").addEventListener("submit",saveRecord);
+
  await displayRecords(name);
 };
 
+/* SAVE ADMIN RECORD */
 async function saveRecord(e){
  e.preventDefault();
 
  if(!auth.currentUser)return;
 
  const data={};
+
  new FormData(e.target).forEach((value,key)=>{
   data[key]=value.trim();
  });
+
+ if(currentModule==="enrollments" || currentModule==="results"){
+  data.studentEmail=(data.studentEmail||"").toLowerCase();
+ }
+
  data.createdAt=serverTimestamp();
 
  try{
   await addDoc(collection(db,currentModule),data);
+
   showMessage("moduleMessage","Record saved successfully.","success");
+
   e.target.reset();
   await displayRecords(currentModule);
+
  }catch(error){
   showMessage("moduleMessage",error.message,"error");
  }
 }
 
+/* DISPLAY ADMIN RECORDS */
 async function displayRecords(name){
+
  try{
   const snapshot=await getDocs(collection(db,name));
   const fields=modules[name];
 
   document.getElementById("tableHead").innerHTML=
-  "<tr>"+fields.map(f=>`<th>${labelName(f)}</th>`).join("")+"</tr>";
+  "<tr>"+fields.map(field=>`<th>${labelName(field)}</th>`).join("")+"</tr>";
 
   document.getElementById("tableBody").innerHTML=
   snapshot.docs.map(d=>{
    const data=d.data();
-   return "<tr>"+fields.map(f=>
-    `<td>${escapeHtml(data[f]??"")}</td>`
+
+   return "<tr>"+fields.map(field=>
+    `<td>${escapeHtml(data[field]??"")}</td>`
    ).join("")+"</tr>";
   }).join("");
 
@@ -421,11 +641,13 @@ async function displayRecords(name){
    document.getElementById("tableBody").innerHTML=
    `<tr><td colspan="${fields.length}">No records available yet.</td></tr>`;
   }
+
  }catch(error){
   showMessage("moduleMessage","Could not load records: "+error.message,"error");
  }
 }
 
+/* ADMIN LOGOUT */
 window.adminLogout=async function(){
  await signOut(auth);
  showPage("adminLogin");
@@ -433,6 +655,7 @@ window.adminLogout=async function(){
 };
 
 showPage("home");
+
 </script>
 </body>
 </html>
