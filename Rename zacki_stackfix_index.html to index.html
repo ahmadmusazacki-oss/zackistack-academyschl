@@ -107,6 +107,136 @@ async function saveModuleRecord(e){e.preventDefault();const record=Object.fromEn
 async function loadModuleRecords(name){const target=document.getElementById('recordList');try{const snap=await getDocs(collection(db,name));if(snap.empty){target.textContent='No records saved yet.';return}target.innerHTML=snap.docs.map(d=>{const data=d.data();const details=Object.entries(data).filter(([k])=>k!=='createdAt').map(([k,v])=>`<p><b>${escapeHtml(labelName(k))}:</b> ${escapeHtml(v)}</p>`).join('');return `<div class="lesson-item">${details}${name==='certificates'&&data.status==='Issued'?`<button class="gold" onclick="window.printCertificate('${d.id}')">Generate / Print Certificate</button>`:''}</div>`}).join('')}catch(err){target.textContent='Unable to load records: '+err.message}}
 async function printCertificate(id){try{const snap=await getDoc(doc(db,'certificates',id));if(!snap.exists()){alert('Certificate record not found.');return}const c=snap.data();if(c.status!=='Issued'){alert('Only certificates with status Issued can be generated.');return}const w=window.open('','_blank');if(!w){alert('Allow pop-ups for this site, then try again.');return}const safe=v=>escapeHtml(v||'');w.document.open();w.document.write(`<!DOCTYPE html><html><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><title>Certificate - ${safe(c.studentName)}</title><style>*{box-sizing:border-box}body{margin:0;background:#eef1ed;font-family:Georgia,serif;color:#17231c}.toolbar{padding:14px;text-align:center;font-family:Arial,sans-serif}.toolbar button{background:#075b36;color:white;border:0;border-radius:6px;padding:12px 18px;font-weight:bold;margin:4px}.sheet{width:277mm;min-height:190mm;margin:12px auto;background:#fff;padding:13mm;border:7px double #d4af37;outline:2px solid #075b36;outline-offset:-14px;text-align:center;position:relative}.inner{border:1px solid #d4af37;min-height:160mm;padding:17mm 12mm}.academy{font: bold 23px Arial,sans-serif;letter-spacing:3px;color:#075b36}.tag{font:12px Arial,sans-serif;letter-spacing:4px;color:#8a6a12;margin-top:7px}.rule{width:90px;border-top:3px solid #d4af37;margin:18px auto}.heading{font-size:38px;color:#075b36;margin:12px 0}.sub{font:15px Arial,sans-serif;letter-spacing:2px}.name{font-size:36px;font-weight:bold;color:#17231c;border-bottom:1px solid #d4af37;display:inline-block;padding:8px 30px;margin:14px 0}.course{font-size:25px;color:#075b36;font-weight:bold;margin:12px}.bodycopy{font:16px/1.7 Arial,sans-serif}.meta{display:flex;justify-content:space-between;gap:20px;margin-top:34px;font:13px Arial,sans-serif;text-align:left}.sign{border-top:1px solid #17231c;padding-top:8px;width:220px;text-align:center}.number{font:12px Arial,sans-serif;color:#555;margin-top:25px}@page{size:A4 landscape;margin:10mm}@media print{body{background:white}.toolbar{display:none}.sheet{margin:0 auto;width:277mm;min-height:190mm;break-inside:avoid;-webkit-print-color-adjust:exact;print-color-adjust:exact}}@media(max-width:800px){.sheet{width:96%;min-height:0;padding:10px}.inner{min-height:0;padding:24px 12px}.heading{font-size:28px}.name{font-size:26px}.academy{font-size:18px}.meta{font-size:11px}}</style></head><body><div class="toolbar"><button onclick="window.print()">Print / Save as PDF</button><button onclick="window.close()">Close</button></div><main class="sheet"><div class="inner"><div class="academy">ZACKI STACKFIX ACADEMY</div><div class="tag">TECHNOLOGY EDUCATION • PRACTICAL SKILLS • INNOVATION</div><div class="rule"></div><div class="heading">CERTIFICATE</div><div class="sub">OF COMPLETION</div><p class="bodycopy">This is proudly presented to</p><div class="name">${safe(c.studentName)}</div><p class="bodycopy">in recognition of completing the learning programme</p><div class="course">${safe(c.course)}</div><p class="bodycopy">and demonstrating commitment to learning and practical skill development.</p><div class="meta"><div><div class="sign">${safe(c.issueDate)}<br>Date of Issue</div></div><div><div class="sign">Founder / Director<br>Zacki Stackfix Academy</div></div></div><div class="number">Certificate No: ${safe(c.certificateNumber)}</div></div></main></body></html>`);w.document.close()}catch(err){alert('Could not generate certificate: '+err.message)}}window.printCertificate=printCertificate;
 async function logout(){await signOut(auth);showPage('home')}window.logout=logout;
+
+/* ZACKI STACKFIX ACADEMY — PRACTICAL ILLUSTRATIONS UPGRADE */
+
+const practicalGuides = {
+  "AI Development": [
+    ["🎯", "Identify a Problem", "Choose a real problem that AI could help solve, such as answering students' questions."],
+    ["📚", "Prepare Examples", "Prepare sample questions and correct answers to guide your AI assistant."],
+    ["🤖", "Build an Assistant", "Use an AI tool to create a simple assistant that responds to student questions."],
+    ["✅", "Test and Improve", "Ask different questions, check the answers and improve unclear responses."]
+  ],
+  "Cybersecurity": [
+    ["⚠️", "Identify a Threat", "Study a sample suspicious message and identify anything that looks unsafe."],
+    ["🔎", "Check the Link", "Examine the displayed website address and look for spelling mistakes or unusual domains."],
+    ["🔐", "Protect Your Account", "Practise creating a strong, unique password and enabling multi-factor authentication."],
+    ["🛡️", "Report the Threat", "Write a short report explaining why the message may be dangerous."]
+  ],
+  "Network Security": [
+    ["🖥️", "Map the Network", "Draw a simple network containing a router, computers and a printer."],
+    ["🔑", "Control Access", "Create example access roles for an administrator, teacher and student."],
+    ["🧱", "Apply Protection", "Describe suitable firewall rules and secure Wi-Fi settings for the network."],
+    ["📊", "Monitor Activity", "Review sample network events and identify anything unusual."]
+  ],
+  "Computer Networking": [
+    ["🖥️", "Identify Devices", "Identify a router, switch, computer, printer and wireless access point."],
+    ["🔌", "Connect Devices", "Draw how computers connect to a switch and how the switch connects to a router."],
+    ["🌐", "Check IP Settings", "Practise identifying an example IP address, subnet mask and default gateway."],
+    ["📡", "Test Connection", "Practise using the ping command to test connectivity between devices you own or are authorised to use."]
+  ],
+  "Cloud Computing": [
+    ["☁️", "Choose a Service", "Identify a cloud storage or computing service and explain what it provides."],
+    ["🗂️", "Create a Resource", "Practise organising sample files into folders in a cloud storage environment."],
+    ["🔐", "Set Permissions", "Explain how to give a teacher access to a file without making it public."],
+    ["💾", "Back Up and Review", "Create a sample backup plan and explain how you would restore lost files."]
+  ],
+  "Web Development": [
+    ["📄", "Build HTML", "Create a webpage with a heading, paragraph, image and link."],
+    ["🎨", "Style with CSS", "Add colours, spacing, borders and a responsive layout to your webpage."],
+    ["⚙️", "Add JavaScript", "Create a button that displays a welcome message when clicked."],
+    ["🚀", "Test and Publish", "Check your links, buttons and mobile layout before publishing your website."]
+  ]
+};
+
+(function addPracticalIllustrations() {
+  const style = document.createElement("style");
+  style.textContent = `
+    .practical-section {
+      margin: 22px 0;
+      padding: 18px;
+      background: #f0f5f2;
+      border-left: 5px solid #0a6b42;
+      border-radius: 10px;
+    }
+    .practical-section h3 {
+      color: #075b36;
+      margin-top: 0;
+    }
+    .practical-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit,minmax(190px,1fr));
+      gap: 12px;
+      margin-top: 14px;
+    }
+    .practical-card {
+      background: white;
+      border: 1px solid #dce6df;
+      border-radius: 9px;
+      padding: 15px;
+      box-shadow: 0 2px 7px #0000000c;
+    }
+    .practical-icon {
+      font-size: 30px;
+      display: block;
+      margin-bottom: 7px;
+    }
+    .practical-card h4 {
+      color: #075b36;
+      margin: 5px 0;
+    }
+    .practical-card p {
+      font-size: 14px;
+      margin-bottom: 0;
+    }
+    .practical-tip {
+      background: #fff3cd;
+      padding: 12px;
+      border-radius: 7px;
+      margin-top: 14px;
+      font-size: 13px;
+    }
+  `;
+  document.head.appendChild(style);
+
+  const originalOpenLesson = window.openLesson;
+
+  window.openLesson = function(index) {
+    originalOpenLesson(index);
+
+    const guides = practicalGuides[currentCourse];
+    const content = document.getElementById("lessonContent");
+
+    if (!guides || !content) return;
+
+    const cards = guides.map((item, index) => `
+      <div class="practical-card">
+        <span class="practical-icon">${item[0]}</span>
+        <h4>Step ${index + 1}: ${item[1]}</h4>
+        <p>${item[2]}</p>
+      </div>
+    `).join("");
+
+    const illustration = document.createElement("section");
+    illustration.className = "practical-section";
+    illustration.innerHTML = `
+      <h3>🧪 Practical Illustration — ${currentCourse}</h3>
+      <p>Follow these practical stages to understand how the knowledge can be applied.</p>
+      <div class="practical-grid">${cards}</div>
+      <div class="practical-tip">
+        <strong>Student Safety Reminder:</strong>
+        Practise only with your own devices, sample information and authorised learning environments.
+      </div>
+    `;
+
+    const exercise = content.querySelector(".exercise");
+    if (exercise) {
+      exercise.insertAdjacentElement("beforebegin", illustration);
+    } else {
+      content.appendChild(illustration);
+    }
+  };
+})();
 </script>
 </body>
 </html>
