@@ -1,253 +1,136 @@
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1">
 <title>Zacki Stackfix Academy</title>
 <style>
-:root{--green:#075b36;--gold:#d4af37;--light:#f4f7f5;--dark:#17231c}
-*{box-sizing:border-box}body{margin:0;font-family:Arial,sans-serif;background:var(--light);color:var(--dark)}
-header{background:var(--green);color:#fff;padding:18px 5%;display:flex;justify-content:space-between;align-items:center;gap:12px;flex-wrap:wrap}header h1{margin:0;font-size:21px}
-nav{display:flex;gap:6px;flex-wrap:wrap}button{border:0;border-radius:6px;padding:11px 14px;cursor:pointer;font-weight:bold}nav button{background:transparent;color:#fff}nav button:hover{background:#ffffff22}
-.action{background:var(--green);color:#fff;margin:4px}.gold{background:var(--gold);color:#17231c;margin:4px}button:disabled{opacity:.45;cursor:not-allowed}
-main{padding:24px 5%;max-width:1200px;margin:auto}.page{display:none}.page.active{display:block}.hero{background:linear-gradient(120deg,#075b36,#123c2b);color:white;padding:48px 24px;border-radius:12px;text-align:center}.hero h2{font-size:32px}
-.card{background:#fff;border-radius:10px;padding:20px;margin:12px 0;box-shadow:0 2px 10px #00000012}.grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(230px,1fr));gap:15px}
-input,select,textarea{display:block;width:100%;padding:12px;margin:8px 0 15px;border:1px solid #ccd5ce;border-radius:6px;font-size:15px}label{font-weight:bold}.lesson-item{background:#fff;padding:15px;margin:10px 0;border-radius:8px;border-left:4px solid var(--gold)}.lesson-content{background:#fff;padding:22px;border-radius:10px;line-height:1.7}.lesson-content h3{color:var(--green)}
-.lab-tabs{display:flex;gap:8px;flex-wrap:wrap;margin:12px 0}.lab-tabs button{background:#e8efe9;color:#123c2b}.lab-tabs button.active{background:var(--green);color:white}.lab-panel{background:#fff;border:1px solid #dce5de;border-radius:10px;padding:18px;margin:12px 0}.lab-output{background:#10251a;color:#eaf7ed;padding:14px;border-radius:8px;white-space:pre-wrap;overflow:auto;min-height:48px}.lab-editor{min-height:170px;font-family:monospace}.lab-preview{width:100%;height:260px;border:1px solid #ccd5ce;border-radius:8px;background:#fff}.message{padding:12px;margin:10px 0;border-radius:6px}.error{background:#ffe5e5;color:#8a1111}.success{background:#e2f5e8;color:#075b36}.small{color:#66736b;font-size:13px}footer{background:#123c2b;color:white;text-align:center;padding:24px;margin-top:35px}.hidden{display:none!important}table{width:100%;border-collapse:collapse;background:white;display:block;overflow-x:auto}td,th{padding:10px;border:1px solid #ddd;text-align:left}a{color:var(--green)}
-@media(max-width:600px){header{display:block}nav{margin-top:12px}.hero h2{font-size:25px}main{padding:18px 4%}}
+:root{--navy:#101b35;--gold:#d4af37;--bg:#f4f6fa;--ink:#172033}
+*{box-sizing:border-box}body{margin:0;font-family:Arial,sans-serif;background:var(--bg);color:var(--ink)}
+header{background:var(--navy);color:white;padding:16px 5%;display:flex;justify-content:space-between;align-items:center;gap:12px;flex-wrap:wrap}
+header h1{font-size:20px;margin:0}nav{display:flex;gap:5px;flex-wrap:wrap}button{border:0;border-radius:7px;padding:11px 14px;font-weight:bold;cursor:pointer}
+nav button{background:transparent;color:white}.primary{background:var(--navy);color:white}.gold{background:var(--gold);color:#171717}
+main{max-width:1150px;margin:auto;padding:22px 4%}.page{display:none}.page.active{display:block}
+.hero{background:linear-gradient(120deg,#101b35,#263e6b);color:white;text-align:center;padding:48px 20px;border-radius:14px}
+.card{background:white;padding:20px;border-radius:11px;margin:14px 0;box-shadow:0 2px 12px #0000000d}
+.grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:14px}
+input,select,textarea{width:100%;padding:12px;border:1px solid #ccd2dc;border-radius:7px;margin:7px 0 14px;font-size:15px}
+label{font-weight:bold}.muted{color:#697386;font-size:13px}.msg{padding:12px;border-radius:7px;margin:10px 0}.ok{background:#e4f6e9;color:#14532d}.err{background:#fee2e2;color:#991b1b}
+.hidden{display:none!important}.lesson{padding:14px;border-left:4px solid var(--gold);background:#fff;margin:10px 0;border-radius:7px}
+.labout{white-space:pre-wrap;background:#101b35;color:#eaf0ff;padding:14px;border-radius:8px;overflow:auto}.editor{min-height:190px;font-family:monospace}.preview{width:100%;height:260px;border:1px solid #ccd2dc;background:white}
+.tabs{display:flex;gap:7px;flex-wrap:wrap;margin:15px 0}.tabs button{background:#e5e9f1;color:#101b35}.tabs button.active{background:#101b35;color:white}
+table{border-collapse:collapse;width:100%;background:white;display:block;overflow:auto}td,th{border:1px solid #ddd;padding:9px;text-align:left}
+footer{text-align:center;background:var(--navy);color:white;padding:25px;margin-top:30px}
+@media(max-width:650px){header{display:block}nav{margin-top:12px}.hero{padding:32px 15px}}
 </style>
 </head>
 <body>
-<header>
- <h1>ZACKI STACKFIX ACADEMY</h1>
- <nav>
-  <button onclick="showPage('home')">Home</button><button onclick="showPage('courses')">Courses</button><button onclick="showPage('practicalLabs')">Practical Labs</button><button onclick="showPage('register')">Register</button><button onclick="showPage('studentLogin')">Student Login</button><button onclick="showPage('adminLogin')">Admin</button>
- </nav>
-</header>
+<header><h1>ZACKI STACKFIX ACADEMY</h1><nav>
+<button onclick="show('home')">Home</button><button onclick="show('courses')">Courses</button><button onclick="show('labs')">Practical Labs</button><button onclick="show('register')">Register</button><button onclick="show('login')">Student Login</button><button onclick="show('adminLogin')">Admin</button>
+</nav></header>
 <main>
-<section id="home" class="page active"><div class="hero"><h2>Welcome to Zacki Stackfix Academy</h2><p>Learn technology. Build skills. Create solutions.</p><button class="gold" onclick="showPage('courses')">Explore Courses</button><button onclick="showPage('register')">Register Now</button></div><h2>Our Courses</h2><div id="homeCourses" class="grid"></div></section>
-<section id="courses" class="page"><h2>Available Courses</h2><p>Choose a course to explore guided lessons and practical exercises.</p><div id="courseList" class="grid"></div></section>
-<section id="courseDetails" class="page"><button class="action" onclick="showPage('courses')">← Back to Courses</button><div id="courseDetailsContent"></div></section>
-<section id="lessonPage" class="page"><div id="lessonContent"></div></section>
-<section id="practicalLabs" class="page">
- <div class="hero"><h2>Digital Practical Laboratory</h2><p>Learn by doing with guided, interactive browser-based tools.</p><p class="small" style="color:#e4eee7">Choose a laboratory below. Your work runs in this browser; no extra app is required.</p></div>
- <div class="lab-tabs">
-  <button class="active" onclick="window.openLab('web')">Web Coding Studio</button><button onclick="window.openLab('network')">Network Lab</button><button onclick="window.openLab('cyber')">Cybersecurity Lab</button><button onclick="window.openLab('ai')">AI Prompt Studio</button><button onclick="window.openLab('cloud')">Cloud Design Lab</button><button onclick="window.openLab('topology')">Network Topology Lab</button>
- </div><div id="labWorkspace" class="lab-panel"><h3>Welcome to the Practical Laboratory</h3><p>Select a lab above to begin a guided practical session.</p></div>
-</section>
-<section id="register" class="page"><div class="card"><h2>Student Registration</h2><div id="registerMessage"></div><form id="registerForm"><label>Full Name</label><input id="regName" required><label>Email Address</label><input id="regEmail" type="email" required><label>Phone Number</label><input id="regPhone" required><label>Select Course</label><select id="regCourse" required></select><label>Password (minimum 6 characters)</label><input id="regPassword" type="password" minlength="6" required><button class="action" type="submit">Create Student Account</button></form></div></section>
-<section id="studentLogin" class="page"><div class="card"><h2>Student Login</h2><div id="studentMessage"></div><form id="studentLoginForm"><label>Email</label><input id="studentEmail" type="email" required><label>Password</label><input id="studentPassword" type="password" required><button class="action" type="submit">Login</button></form><div id="studentPortal" class="hidden"></div></div></section>
-<section id="adminLogin" class="page"><div class="card"><h2>Administrator Login</h2><div id="adminMessage"></div><form id="adminLoginForm"><label>Admin Email</label><input id="adminEmail" type="email" required><label>Password</label><input id="adminPassword" type="password" required><button class="action" type="submit">Admin Login</button></form></div></section>
-<section id="dashboard" class="page"><h2>Administrator Dashboard</h2><div id="dashboardContent"></div><button class="action" onclick="logout()">Logout</button></section>
-</main>
-<footer><h3>Zacki Stackfix Academy</h3><p>Technology Education • Practical Skills • Innovation</p><p>© 2026 Zacki Stackfix Academy</p></footer>
-
-<script>
-/* Independent practical-lab controller.
-   This runs even if the academy's Firebase module cannot connect. */
-(function () {
-  const $ = id => document.getElementById(id);
-  window.showPage = function (id) {
-    document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
-    const page = $(id);
-    if (page) page.classList.add('active');
-    window.scrollTo(0, 0);
-    if (id === 'practicalLabs' && !$('labWorkspace').dataset.started) {
-      window.openLab('web');
-    }
-  };
-
-  const starter = '<!DOCTYPE html>\n<html><head><style>body{font-family:Arial;padding:20px;background:#f0f7f2}h1{color:#075b36}</style></head><body><h1>Hello, Zacki Stackfix!</h1><p>My first practical webpage.</p><button onclick="document.querySelector(\\'p\\').textContent=\\'You clicked the button!\\'">Click me</button></body></html>';
-
-  window.openLab = function (name) {
-    const workspace = $('labWorkspace');
-    if (!workspace) return;
-    workspace.dataset.started = 'yes';
-    document.querySelectorAll('.lab-tabs button').forEach(b => {
-      b.classList.toggle('active', (b.getAttribute('onclick') || '').includes("'" + name + "'"));
-    });
-    const views = {
-      web: `<h2>Web Coding Studio</h2><p>Write HTML, CSS and JavaScript, then run your page in the preview.</p>
-        <label>Code editor</label><textarea id="webCode" class="lab-editor" rows="10"></textarea>
-        <button class="action" onclick="window.runWebCode()">Run Code</button><button class="gold" onclick="window.resetWebCode()">Reset Example</button>
-        <h3>Live Preview</h3><iframe id="webPreview" class="lab-preview" title="Web page preview" sandbox="allow-scripts"></iframe>`,
-      network: `<h2>Network Address Lab</h2><p>Practise IPv4 subnet calculations using example addresses.</p>
-        <label>IPv4 address</label><input id="ipAddress" value="192.168.1.10">
-        <label>Prefix length (CIDR)</label><input id="ipPrefix" type="number" min="1" max="30" value="24">
-        <button class="action" onclick="window.calculateNetwork()">Calculate Network</button>
-        <div id="networkResult" class="lab-output">Your result will appear here.</div>
-        <p class="small">Use only addresses from networks you own or are authorised to administer.</p>`,
-      cyber: `<h2>Cybersecurity Awareness Lab</h2><p>Identify the safe response to this suspicious message:</p>
-        <div class="lab-panel"><b>Sample message</b><p>“Your academy email will close today. Confirm your password using this unfamiliar link.”</p>
-        <label>What should you do?</label><select id="cyberAnswer"><option value="">Choose an answer</option><option value="a">Click and enter your password</option><option value="b">Do not click; verify through an official channel and report it</option><option value="c">Forward it to everyone</option></select>
-        <button class="action" onclick="window.checkCyberAnswer()">Check Answer</button><div id="cyberFeedback" class="lab-output">Feedback appears here.</div></div>
-        <h3>Safety checklist</h3><ul><li>Check the sender and domain.</li><li>Never share passwords or one-time codes.</li><li>Verify unexpected requests independently.</li><li>Report suspicious messages.</li></ul>`,
-      ai: `<h2>AI Prompt Engineering Studio</h2><p>Build a useful prompt with a role, task, context and output format.</p>
-        <label>AI role</label><input id="aiRole" value="patient computer networking tutor">
-        <label>Task</label><input id="aiTask" value="Explain the OSI model to a beginner">
-        <label>Context</label><textarea id="aiContext" rows="3">The learner is a beginner. Use simple language and practical examples.</textarea>
-        <label>Output format</label><select id="aiFormat"><option>Step-by-step lesson with examples and quiz</option><option>Short summary with bullet points</option><option>Practical project instructions</option></select>
-        <button class="action" onclick="window.buildPrompt()">Build My Prompt</button><div id="aiPromptResult" class="lab-output">Your prompt will appear here.</div>
-        <button class="gold" onclick="window.copyLabText('aiPromptResult')">Copy Prompt</button>`,
-      cloud: `<h2>Cloud Design Lab</h2><p>Plan a simple cloud setup for an academy.</p>
-        <label>Workload</label><select id="cloudWorkload"><option value="school">Student records and learning portal</option><option value="files">Document and lesson storage</option><option value="website">Public academy website</option></select>
-        <label>Deployment model</label><select id="cloudModel"><option>Public cloud</option><option>Private cloud</option><option>Hybrid cloud</option></select>
-        <label>Priority</label><select id="cloudPriority"><option>Security and access control</option><option>Low cost</option><option>Easy scaling</option><option>Backup and recovery</option></select>
-        <button class="action" onclick="window.designCloud()">Generate Design</button><div id="cloudResult" class="lab-output">Your design appears here.</div>`,
-      topology: `<h2>Network Topology Builder</h2><p>Choose a topology and number of computers.</p>
-        <label>Topology</label><select id="topologyType"><option>Star</option><option>Bus</option><option>Ring</option><option>Mesh</option></select>
-        <label>Number of computers (2–12)</label><input id="topologyCount" type="number" min="2" max="12" value="5">
-        <button class="action" onclick="window.drawTopology()">Build Network</button><div id="topologyResult" class="lab-output">Your diagram appears here.</div>`
-    };
-    workspace.innerHTML = views[name] || '<p>Select a practical laboratory above.</p>';
-    if (name === 'web') { $('webCode').value = starter; window.runWebCode(); }
-    if (name === 'topology') window.drawTopology();
-  };
-
-  window.runWebCode = function () {
-    const code = $('webCode'), preview = $('webPreview');
-    if (code && preview) preview.srcdoc = code.value;
-  };
-  window.resetWebCode = function () { if ($('webCode')) $('webCode').value = starter; window.runWebCode(); };
-  window.calculateNetwork = function () {
-    const ip = ($('ipAddress')?.value || '').trim(), prefix = Number($('ipPrefix')?.value), parts = ip.split('.');
-    const out = $('networkResult');
-    if (parts.length !== 4 || parts.some(p => !/^\d+$/.test(p) || Number(p) < 0 || Number(p) > 255) || !Number.isInteger(prefix) || prefix < 1 || prefix > 30) {
-      out.textContent = 'Enter a valid IPv4 address and a prefix from /1 to /30.'; return;
-    }
-    const octets = parts.map(Number), ipNum = octets.reduce((a,n) => a * 256 + n, 0) >>> 0;
-    const mask = (0xffffffff << (32-prefix)) >>> 0, net = (ipNum & mask) >>> 0, broad = (net | (~mask >>> 0)) >>> 0;
-    const fmt = n => [n>>>24,(n>>>16)&255,(n>>>8)&255,n&255].join('.');
-    out.textContent = `IP address: ${ip}\nSubnet mask: ${fmt(mask)}\nNetwork address: ${fmt(net)}\nBroadcast address: ${fmt(broad)}\nUsable host addresses: ${Math.max(0, Math.pow(2,32-prefix)-2)}`;
-  };
-  window.checkCyberAnswer = function () {
-    const v = $('cyberAnswer').value;
-    $('cyberFeedback').textContent = v === 'b' ? 'Correct. Do not click unexpected links. Verify through an official channel and report the message.' : v ? 'Not quite. Never enter your password through an unexpected link. Choose the safe verification and reporting option.' : 'Choose an answer first.';
-  };
-  window.buildPrompt = function () {
-    const role=$('aiRole').value.trim(), task=$('aiTask').value.trim(), context=$('aiContext').value.trim(), format=$('aiFormat').value;
-    $('aiPromptResult').textContent = `Act as a ${role}.\n\nTask: ${task}\n\nContext: ${context}\n\nOutput: ${format}.\n\nUse accurate information, explain unfamiliar terms and identify anything that needs verification.`;
-  };
-  window.designCloud = function () {
-    const w=$('cloudWorkload').value, m=$('cloudModel').value, p=$('cloudPriority').value;
-    const components={school:'Web application, managed database, identity and access management, encrypted backups',files:'Object storage, role-based access, file versioning and backup policy',website:'Static website hosting, domain name, HTTPS and content delivery network'};
-    $('cloudResult').textContent=`ACADEMY CLOUD DESIGN\nWorkload: ${w}\nDeployment: ${m}\nPriority: ${p}\nSuggested components: ${components[w]}\nSecurity controls: multi-factor authentication for administrators, least-privilege access, encryption, logging and tested backups.\nNext step: compare provider pricing and data-protection requirements.`;
-  };
-  window.drawTopology = function () {
-    const type=$('topologyType'), count=$('topologyCount'), out=$('topologyResult');
-    if (!type || !count || !out) return;
-    const n=Number(count.value);
-    if (!Number.isInteger(n) || n<2 || n>12) { out.textContent='Choose between 2 and 12 computers.'; return; }
-    const t=type.value; let diagram='';
-    if(t==='Star') diagram='                 [ROUTER]\n                    |\n                 [SWITCH]\n'+Array.from({length:n},(_,i)=>`                 |---- [PC ${i+1}]`).join('\n');
-    else if(t==='Bus') diagram='[PC 1]---[PC 2]---[PC 3]--- ... ---[PC '+n+']\n             Shared backbone cable';
-    else if(t==='Ring') diagram=Array.from({length:n},(_,i)=>`[PC ${i+1}]`).join('---')+'---(back to PC 1)';
-    else diagram='Each computer has a direct link to every other computer.\n'+Array.from({length:n},(_,i)=>`PC ${i+1}: ${n-1} links`).join('\n');
-    out.textContent=`${t.toUpperCase()} TOPOLOGY\n${diagram}\n\nStudy task: explain one advantage and one limitation of this topology.`;
-  };
-  window.copyLabText = async function (id) {
-    const el=$(id); if(!el) return;
-    try { await navigator.clipboard.writeText(el.textContent); alert('Copied.'); }
-    catch (_) { alert('Copy is unavailable here. Select the text and copy it manually.'); }
-  };
-})();
-</script>
-
+<section id="home" class="page active"><div class="hero"><h2>Welcome to Zacki Stackfix Academy</h2><p>Learn Technology. Build Skills. Create Smart Solutions.</p><button class="gold" onclick="show('courses')">Explore Courses</button> <button onclick="show('register')">Register Now</button></div><h2>Our Programmes</h2><div id="homeCourses" class="grid"></div></section>
+<section id="courses" class="page"><h2>Available Courses</h2><div id="courseList" class="grid"></div></section>
+<section id="courseDetail" class="page"><button class="primary" onclick="show('courses')">← Back</button><div id="courseContent"></div></section>
+<section id="register" class="page"><div class="card"><h2>Student Registration</h2><div id="regMsg"></div><form id="regForm">
+<label>Full name</label><input id="regName" required><label>Email</label><input id="regEmail" type="email" required><label>Phone number</label><input id="regPhone" required><label>Select course</label><select id="regCourse" required></select><label>Password (minimum 6 characters)</label><input id="regPass" type="password" minlength="6" required><button class="primary">Create Account</button></form><p class="muted">New accounts are activated automatically and enrolled in the selected course.</p></div></section>
+<section id="login" class="page"><div class="card"><h2>Student Login</h2><div id="loginMsg"></div><form id="loginForm"><label>Email</label><input id="loginEmail" type="email" required><label>Password</label><input id="loginPass" type="password" required><button class="primary">Login</button></form><div id="studentPortal" class="hidden"></div></div></section>
+<section id="adminLogin" class="page"><div class="card"><h2>Administrator Login</h2><div id="adminMsg"></div><form id="adminForm"><label>Email</label><input id="adminEmail" type="email" required><label>Password</label><input id="adminPass" type="password" required><button class="primary">Login as Admin</button></form></div></section>
+<section id="dashboard" class="page"><h2>Administrator Dashboard</h2><div id="adminArea"></div><button class="primary" onclick="logout()">Logout</button></section>
+<section id="labs" class="page"><div class="hero"><h2>Digital Practical Laboratory</h2><p>Practice technology skills directly in your browser.</p></div><div class="tabs" id="labTabs">
+<button class="active" onclick="lab('web',this)">Web Coding</button><button onclick="lab('network',this)">Network Lab</button><button onclick="lab('cyber',this)">Cybersecurity</button><button onclick="lab('ai',this)">AI Prompt Studio</button><button onclick="lab('cloud',this)">Cloud Design</button><button onclick="lab('topology',this)">Topology Builder</button></div><div id="labArea" class="card"></div></section>
+</main><footer><h3>Zacki Stackfix Academy</h3><p>Technology Education • Practical Skills • Innovation</p><p>© 2026 Zacki Stackfix Academy</p></footer>
 <script type="module">
 import {initializeApp} from 'https://www.gstatic.com/firebasejs/10.14.1/firebase-app.js';
 import {getAuth,createUserWithEmailAndPassword,signInWithEmailAndPassword,signOut} from 'https://www.gstatic.com/firebasejs/10.14.1/firebase-auth.js';
 import {getFirestore,doc,setDoc,getDoc,addDoc,collection,getDocs,query,where,serverTimestamp} from 'https://www.gstatic.com/firebasejs/10.14.1/firebase-firestore.js';
+
 const firebaseConfig={apiKey:'AIzaSyBNHpKN8PyzlPCki83WqUBl5GIHP7vstnk',authDomain:'zacki-stackfix-academy.firebaseapp.com',projectId:'zacki-stackfix-academy',storageBucket:'zacki-stackfix-academy.firebasestorage.app',messagingSenderId:'800401275558',appId:'1:800401275558:web:9d65b9b30719a0f029d267',measurementId:'G-C77GMHRYKX'};
 const app=initializeApp(firebaseConfig),auth=getAuth(app),db=getFirestore(app);
 const courses=['AI Development','Cybersecurity','Network Security','Computer Networking','Cloud Computing','Web Development'];
-const curriculum={
-'AI Development':[
-['Introduction to Artificial Intelligence','Artificial intelligence (AI) describes computer systems designed to perform tasks such as recognising patterns, understanding language and making predictions. AI tools support people, but their outputs can be incomplete or incorrect.',['Meaning and examples of AI','AI compared with ordinary software','Benefits and limitations','Human oversight'],'List five AI tools or features you have seen and explain what each one does.'],
-['Data and Machine Learning Basics','Machine learning is a branch of AI in which a system learns patterns from examples. Data is divided into training and testing sets so the model can be evaluated on information it has not used during training.',['Datasets, features and labels','Training and testing','Model predictions','Accuracy and errors','Data quality'],'Make a small sample table that could help a program sort messages into school, sports and personal categories.'],
-['Prompt Engineering and AI Assistants','A prompt is an instruction given to an AI assistant. Useful prompts state the task, provide context, set limits and request a clear output format. Always verify important facts and avoid entering confidential information.',['Clear instructions','Context and examples','Output formats','Fact-checking','Privacy'],'Write a prompt asking an AI assistant to teach the OSI model to a beginner, with examples and a short quiz.'],
-['Building a Simple AI Solution','An AI project starts with a real problem. Define the goal, identify appropriate data, select a suitable tool, test the result and improve it using feedback. A small project can organise study questions by subject.',['Problem definition','Data selection','Tool selection','Testing and evaluation','Improvement'],'Design a simple study assistant. Describe its purpose, three features and how you would test it.'],
-['Responsible AI and Project Presentation','Responsible AI considers privacy, fairness, transparency, reliability and safety. Developers should explain limitations, protect personal information and keep people involved in important decisions.',['Privacy and consent','Bias and fairness','Human review','Transparency','Project communication'],'Prepare a short presentation for an AI project and explain three safeguards you would include.']],
-'Cybersecurity':[
-['What is Cybersecurity?','Cybersecurity protects computers, networks, applications and information from unauthorised access, damage or disruption. It combines people, processes and technology. The CIA triad describes confidentiality, integrity and availability.',['Confidentiality','Integrity','Availability','Threats and vulnerabilities','Security controls'],'List five digital assets used by a school and one way to protect each.'],
-['Online Safety and Account Protection','Protect accounts with unique passwords, multi-factor authentication and safe recovery settings. Never share one-time passwords or verification codes. Be cautious of unexpected login alerts and password-reset messages.',['Strong unique passwords','Password managers','Multi-factor authentication','Recovery options','Suspicious login alerts'],'Create a safe-account checklist. Do not write down or share your real passwords.'],
-['Malware and Phishing Awareness','Malware is software intended to harm devices or access information without permission. Phishing uses deceptive messages or websites to trick people into revealing information or taking unsafe actions.',['Viruses, ransomware and spyware','Email and SMS phishing','Suspicious links','Unsafe attachments','Reporting incidents'],'Identify five warning signs in a sample suspicious message. Do not open its links or attachments.'],
-['Data Privacy and Safe Browsing','Data privacy concerns how personal information is collected, used, stored and shared. Safe browsing includes checking website addresses, using trusted downloads and limiting unnecessary sharing.',['Personal information','Website address checks','Privacy settings','Secure connections','Safe downloads'],'Review a practice account’s privacy settings and list five improvements.'],
-['Ethical Cybersecurity and Careers','Cybersecurity professionals work with permission and within an agreed scope. They follow laws, protect privacy and report findings responsibly. Career paths include security operations, risk analysis, auditing and security engineering.',['Authorisation and scope','Responsible disclosure','Professional ethics','Career roles','Continuous learning'],'Write a short code of conduct for a beginner cybersecurity student.']],
-'Network Security':[
-['Introduction to Network Security','Network security protects connected devices, services and information as data moves between systems. It combines secure configuration, monitoring, access control and user awareness.',['Network security goals','Common threats','Secure network design','People and technology'],'Draw a simple school network and mark three places where security controls should be used.'],
-['Authentication and Access Control','Authentication verifies a user’s identity. Authorisation determines what that user may do. Access control applies permissions so each person can use only the resources needed for their role.',['Authentication versus authorisation','User accounts and roles','Least privilege','Multi-factor authentication','Account reviews'],'Create a permission table for administrator, teacher and student accounts.'],
-['Firewalls, Encryption and Secure Wi-Fi','A firewall filters network traffic according to security rules. Encryption makes information unreadable to people without the correct key. Secure Wi-Fi uses modern protection, updated equipment and strong passwords.',['Firewall purpose','Traffic rules','Encryption in transit and at rest','WPA2 and WPA3','Guest networks'],'Prepare a safe Wi-Fi checklist for a small office. Include updates, strong passwords and guest access.'],
-['Threats, Malware and Social Engineering','Network threats include malware, unauthorised access and denial-of-service attempts. Social engineering manipulates people into revealing information or approving unsafe actions.',['Malware awareness','Social engineering','Phishing','Patch management','Defence in depth'],'Write five warning signs of social engineering and explain how staff should report it.'],
-['Monitoring, Backups and Incident Response','Monitoring helps administrators identify unusual activity. Backups support recovery after deletion, equipment failure or cyber incidents. Incident response explains how to report, contain and recover from a problem.',['Security logs','Unusual activity','Backup schedules','Incident reporting','Recovery'],'Prepare an incident-response checklist for a school network outage.']],
-'Computer Networking':[
-['Introduction to Computer Networking','A computer network is a group of connected devices that communicate and share resources. Networks support communication, file sharing, printing, internet access and centralised services.',['Meaning of a network','Network advantages','Clients and servers','Wired and wireless links'],'Draw four computers connected to a switch, a router and the internet.'],
-['Types of Networks and Topologies','A LAN covers a limited area such as a home or office. A WAN connects networks across larger distances. Topology describes how network devices are arranged, such as star, bus, ring or mesh.',['LAN, WAN, MAN and PAN','Star topology','Bus and ring topology','Mesh topology','Wireless networks'],'Draw a star topology for a computer laboratory and label its central switch.'],
-['Networking Devices and Cabling','A switch connects devices within a local network. A router connects different networks. A modem links a network to an internet service, while an access point provides wireless connectivity. Ethernet cables provide wired connections.',['Router and switch','Modem and access point','Ethernet cables','Network ports','Device placement'],'Identify a router, switch and network cable. Write one function for each.'],
-['IP Addresses, DNS and DHCP','An IP address identifies a device on an IP network. DNS translates domain names into IP addresses. DHCP automatically assigns network settings such as an IP address and gateway.',['IPv4 format','Private and public addresses','Subnet mask and gateway','DNS','DHCP'],'Use a classroom example such as 192.168.1.10 to label an IP address, subnet mask and gateway.'],
-['Network Models and Protocols','The OSI model describes communication in seven layers. TCP/IP is the protocol suite used by modern networks. Protocols such as TCP, UDP, HTTP, HTTPS and DNS define how devices exchange information.',['Seven OSI layers','TCP/IP model','TCP and UDP','HTTP and HTTPS','DNS and DHCP'],'Write the seven OSI layers in order and give one example of a networking function.'],
-['Network Troubleshooting and Safety','Troubleshooting is a systematic process for finding and resolving network problems. Identify symptoms, check physical connections, review settings and use approved tests before making changes.',['Identify the problem','Check cables and power','Check IP settings','Test connectivity','Record the solution'],'Create a checklist for a computer that cannot access the school network.']],
-'Cloud Computing':[
-['Introduction to Cloud Computing','Cloud computing provides resources such as storage, servers, databases and software over a network. Organisations can use these resources without owning every physical server.',['Cloud services','On-demand resources','Scalability','Examples','Benefits and limitations'],'List three services you use that may rely on cloud computing.'],
-['Service Models: IaaS, PaaS and SaaS','IaaS provides computing infrastructure. PaaS provides a platform for building and running applications. SaaS provides ready-to-use software over the internet.',['IaaS','PaaS','SaaS','Examples','Shared responsibilities'],'Classify examples of a virtual server, app platform and webmail service into the three models.'],
-['Deployment Models and Cloud Storage','Public cloud serves multiple customers. Private cloud is dedicated to one organisation. Hybrid cloud combines environments. Cloud storage keeps files on provider-managed systems and makes them available to authorised users.',['Public cloud','Private cloud','Hybrid cloud','Community cloud','Permissions and backups'],'Recommend a cloud deployment model for a small school and explain why.'],
-['Virtualisation and Cloud Networking','Virtualisation allows multiple virtual computing environments to run on physical hardware. Containers package applications with their dependencies. Cloud networking connects resources using virtual networks and security controls.',['Virtual machines','Hypervisors','Containers','Virtual networks','Resource allocation'],'Draw one physical server hosting two virtual machines and label the parts.'],
-['Cloud Security and Cost Management','Cloud security is shared between provider and customer. Users must protect accounts, configure permissions, monitor usage, back up data and understand service costs.',['Shared responsibility','Identity and access','Encryption and backups','Monitoring','Cost control'],'Create a five-point cloud-security checklist for a small organisation.']],
-'Web Development':[
-['How Websites Work','A website contains files and resources delivered to a browser by a web server. The browser requests a page, receives its content and displays it. HTML provides structure, CSS appearance and JavaScript interaction.',['Browser and web server','Domain names and hosting','HTML, CSS and JavaScript','HTTP and HTTPS'],'Draw a diagram showing a user, browser, internet and web server.'],
-['HTML Structure and Elements','HTML provides the structure of a web page. Elements can contain headings, paragraphs, links, images, lists and forms. A well-structured page uses meaningful elements and labels.',['DOCTYPE and document structure','Head and body','Headings and paragraphs','Links and images','Forms and labels'],'Create a basic page with a heading, two paragraphs, a list and a link.'],
-['CSS Styling and Responsive Design','CSS controls the appearance of a page, including colours, spacing, fonts and layouts. Responsive design helps a website adapt to different screen sizes.',['Selectors and properties','Colours and typography','Margin and padding','Flexbox and grid','Mobile-friendly layouts'],'Style a page with readable text, spacing and a responsive two-column layout.'],
-['JavaScript and Page Interaction','JavaScript adds behaviour to web pages. It can respond to button clicks, validate forms and update page content. Beginners should learn variables, functions, conditions and events.',['Variables and data types','Functions','Conditions','Events','Form validation'],'Create a button that displays a welcome message when clicked.'],
-['Publishing, Testing and Website Safety','Publishing makes a website available online. Before publishing, test links, forms, mobile layout and spelling. Use HTTPS, protect administrator accounts and avoid exposing private information in code.',['Hosting','Testing on devices','HTTPS','Safe handling of user information','Backups and updates'],'Prepare a launch checklist for a small school website and test it on a phone.']]
+const lessons={
+'AI Development':['Introduction to AI','Data and Machine Learning Basics','Prompt Engineering','Building a Simple AI Solution','Responsible AI'],
+'Cybersecurity':['Introduction to Cybersecurity','Online Safety and Account Protection','Malware and Phishing Awareness','Data Privacy','Ethical Cybersecurity'],
+'Network Security':['Network Security Fundamentals','Authentication and Access Control','Firewalls and Encryption','Threat Awareness','Monitoring and Incident Response'],
+'Computer Networking':['Introduction to Networks','Network Types and Topologies','Networking Devices and Cabling','IP Addressing, DNS and DHCP','OSI and TCP/IP Models','Network Troubleshooting'],
+'Cloud Computing':['Introduction to Cloud Computing','IaaS, PaaS and SaaS','Cloud Deployment Models','Virtualisation and Cloud Networking','Cloud Security and Cost Management'],
+'Web Development':['How Websites Work','HTML Structure','CSS and Responsive Design','JavaScript Fundamentals','Publishing and Website Safety']
 };
-const modules={students:['fullName','admissionNumber','phone','gender','dateOfBirth','parentName','parentPhone','address','status'],teachers:['fullName','teacherID','phone','email','subject','status'],departments:['departmentName','departmentCode','description','status'],programmes:['programmeName','programmeCode','department','duration','qualification','status'],courses:['courseName','courseCode','description','duration','status'],enrollments:['studentName','studentEmail','admissionNumber','course','enrollmentDate','duration','status'],results:['studentName','studentEmail','admissionNumber','course','score','grade','session','remark'],attendance:['studentName','admissionNumber','course','date','attendanceStatus'],fees:['studentName','admissionNumber','amount','paid','balance','paymentDate','status'],certificates:['studentName','admissionNumber','course','certificateNumber','issueDate','status'],announcements:['title','message','date','status'],materials:['title','course','description','resourceUrl','status']};
-let currentModule='students';
-function showPage(id){document.querySelectorAll('.page').forEach(p=>p.classList.remove('active'));const page=document.getElementById(id);if(page)page.classList.add('active');window.scrollTo(0,0)}window.showPage=showPage;
-function escapeHtml(v){return String(v??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]))}
-function labelName(s){return s.replace(/([A-Z])/g,' $1').replace(/^./,c=>c.toUpperCase())}
-function showMessage(id,msg,type='error'){const el=document.getElementById(id);if(el)el.innerHTML=`<div class="message ${type}">${escapeHtml(msg)}</div>`}
-const labWorkspace=()=>document.getElementById('labWorkspace');
-function openLab(name){
- document.querySelectorAll('.lab-tabs button').forEach(b=>b.classList.toggle('active',b.getAttribute('onclick').includes("'"+name+"'")));
+const $=id=>document.getElementById(id);
+window.show=id=>{document.querySelectorAll('.page').forEach(p=>p.classList.remove('active'));$(id)?.classList.add('active');window.scrollTo(0,0)};
+const esc=s=>String(s??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+function message(id,msg,ok=false){$(id).innerHTML=`<div class="msg ${ok?'ok':'err'}">${esc(msg)}</div>`}
+function renderCourses(){
+ const html=courses.map(c=>`<div class="card"><h3>${esc(c)}</h3><p>${lessons[c].length} guided lessons with practical exercises.</p><button class="primary" onclick="openCourse('${c}')">View Course</button><button class="gold" onclick="applyCourse('${c}')">Register</button></div>`).join('');
+ $('homeCourses').innerHTML=html;$('courseList').innerHTML=html;$('regCourse').innerHTML='<option value="">Choose course</option>'+courses.map(c=>`<option>${esc(c)}</option>`).join('');
+}
+window.openCourse=c=>{$('courseContent').innerHTML=`<div class="card"><h2>${esc(c)}</h2><p>Course curriculum</p>${lessons[c].map((l,i)=>`<div class="lesson"><b>Lesson ${i+1}: ${esc(l)}</b><p>Study the key concepts, review real-world examples, complete the practical task and record what you learned.</p><p><b>Practical task:</b> Prepare a short exercise or project demonstrating this topic.</p></div>`).join('')}<button class="gold" onclick="applyCourse('${c}')">Register for this course</button></div>`;show('courseDetail')};
+window.applyCourse=c=>{$('regCourse').value=c;show('register')};renderCourses();
+
+$('regForm').addEventListener('submit',async e=>{
+ e.preventDefault();const fullName=$('regName').value.trim(),email=$('regEmail').value.trim().toLowerCase(),phone=$('regPhone').value.trim(),course=$('regCourse').value,password=$('regPass').value;
+ try{
+  const cred=await createUserWithEmailAndPassword(auth,email,password);
+  const admissionNumber='ZSA/'+new Date().getFullYear()+'/'+Date.now().toString().slice(-6);
+  const student={fullName,email,phone,course,admissionNumber,status:'Active',createdAt:serverTimestamp()};
+  await setDoc(doc(db,'students',cred.user.uid),student);
+  await addDoc(collection(db,'enrollments'),{studentName:fullName,studentEmail:email,admissionNumber,course,enrollmentDate:new Date().toISOString().slice(0,10),status:'Active',createdAt:serverTimestamp()});
+  await signOut(auth);e.target.reset();message('regMsg',`Registration successful. Admission number: ${admissionNumber}. Your account is Active. Log in to access your course.`,true);
+ }catch(err){message('regMsg',err.message)}
+});
+$('loginForm').addEventListener('submit',async e=>{
+ e.preventDefault();try{
+  const cred=await signInWithEmailAndPassword(auth,$('loginEmail').value.trim().toLowerCase(),$('loginPass').value),snap=await getDoc(doc(db,'students',cred.user.uid));
+  if(!snap.exists()){await signOut(auth);message('loginMsg','No student record found for this account.');return}
+  const s=snap.data();$('loginForm').classList.add('hidden');const p=$('studentPortal');p.classList.remove('hidden');
+  p.innerHTML=`<div class="card"><h2>Welcome, ${esc(s.fullName)}</h2><p><b>Admission number:</b> ${esc(s.admissionNumber||'Not assigned')}</p><p><b>Email:</b> ${esc(s.email)}</p><p><b>Course:</b> ${esc(s.course)}</p><p><b>Status:</b> ${esc(s.status||'Active')}</p><button class="primary" onclick="openCourse('${esc(s.course)}')">Open My Course</button><button class="gold" onclick="studentLogout()">Logout</button></div><div class="card"><h3>My Enrollments</h3><div id="myEnrollments">Loading...</div></div><div class="card"><h3>My Results</h3><div id="myResults">Loading...</div></div><div class="card"><h3>My Certificates</h3><div id="myCertificates">Loading...</div></div><div class="card"><h3>Announcements</h3><div id="myAnnouncements">Loading...</div></div><div class="card"><h3>Learning Materials</h3><div id="myMaterials">Loading...</div></div>`;
+  await loadStudentData(s);
+ }catch(err){message('loginMsg',err.message)}
+});
+async function loadStudentData(s){
+ for(const [col,target] of [['enrollments','myEnrollments'],['results','myResults'],['certificates','myCertificates']]){
+  try{const snap=await getDocs(query(collection(db,col),where('studentEmail','==',s.email)));$(target).innerHTML=snap.empty?'No records available.':snap.docs.map(d=>{const x=d.data();if(col==='certificates'&&String(x.status).toLowerCase()==='issued')return `<div class="lesson"><b>${esc(x.course||'Certificate')}</b><p>Certificate No: ${esc(x.certificateNumber||'')}</p><p>Issue date: ${esc(x.issueDate||'')}</p><button class="gold" onclick="downloadCertificate('${esc(x.certificateNumber)}','${esc(x.studentName||s.fullName)}','${esc(x.course||s.course)}','${esc(x.issueDate||'')}','${esc(x.admissionNumber||s.admissionNumber||'')}')">Download Certificate</button></div>`;return `<div class="lesson">${Object.entries(x).filter(([k])=>k!=='createdAt').map(([k,v])=>`<p><b>${esc(k)}:</b> ${esc(v)}</p>`).join('')}</div>`}).join('')}catch(e){$(target).textContent='Unable to load records. Check database permissions.'}
+ }
+ for(const [col,target] of [['announcements','myAnnouncements'],['materials','myMaterials']]){
+  try{const snap=await getDocs(query(collection(db,col),where('status','==','Published')));$(target).innerHTML=snap.empty?'No published items yet.':snap.docs.map(d=>{const x=d.data();let link='';if(x.resourceUrl){try{const u=new URL(x.resourceUrl);if(u.protocol==='https:')link=`<p><a href="${esc(u.href)}" target="_blank" rel="noopener">Open material</a></p>`}catch{}}return `<div class="lesson"><b>${esc(x.title||'')}</b><p>${esc(x.message||x.description||'')}</p>${link}</div>`}).join('')}catch(e){$(target).textContent='Unable to load.'}
+ }
+}
+window.studentLogout=async()=>{await signOut(auth);$('studentPortal').classList.add('hidden');$('loginForm').classList.remove('hidden');$('loginForm').reset();show('login')};
+window.downloadCertificate=(number,name,course,date,admission)=>{
+ const w=window.open('','_blank');if(!w){alert('Allow pop-ups to print your certificate.');return}
+ const safe=esc;w.document.write(`<!doctype html><html><head><title>Certificate</title><style>body{font-family:Georgia,serif;padding:28px;background:#f4f4f4}.sheet{background:white;border:12px double #d4af37;text-align:center;padding:55px;color:#101b35;max-width:900px;margin:auto}.school{font:bold 28px Arial}.gold{color:#a17c18;letter-spacing:3px}.name{font-size:36px;font-weight:bold;border-bottom:2px solid #d4af37;display:inline-block;padding:12px}.course{font-size:24px}.meta{display:flex;justify-content:space-between;margin-top:50px;font:13px Arial}@media print{body{padding:0;background:white}.sheet{max-width:none;min-height:85vh}}</style></head><body><div class="sheet"><div class="school">ZACKI STACKFIX ACADEMY</div><p class="gold">LEARN TECHNOLOGY • BUILD SKILLS • CREATE SMART SOLUTIONS</p><h1>CERTIFICATE OF COMPLETION</h1><p>This certificate is proudly presented to</p><div class="name">${safe(name)}</div><p>for successfully completing the course</p><p class="course"><b>${safe(course)}</b></p><p>at Zacki Stackfix Academy.</p><div class="meta"><span>Admission: ${safe(admission)}</span><span>Certificate: ${safe(number)}</span><span>Date: ${safe(date)}</span></div><p style="margin-top:60px">_________________________<br>Academy Director</p></div><script>window.onload=()=>window.print()<\\/script></body></html>`);w.document.close();
+};
+
+const moduleFields={students:['fullName','admissionNumber','email','phone','course','status'],teachers:['fullName','teacherID','email','phone','subject','status'],departments:['departmentName','departmentCode','description','status'],programmes:['programmeName','programmeCode','department','duration','qualification','status'],courses:['courseName','courseCode','description','duration','status'],enrollments:['studentName','studentEmail','admissionNumber','course','enrollmentDate','status'],results:['studentName','studentEmail','admissionNumber','course','score','grade','session','remark'],attendance:['studentName','admissionNumber','course','date','attendanceStatus'],fees:['studentName','admissionNumber','amount','paid','balance','paymentDate','status'],certificates:['studentName','studentEmail','admissionNumber','course','certificateNumber','issueDate','status'],announcements:['title','message','date','status'],materials:['title','course','description','resourceUrl','status']};
+$('adminForm').addEventListener('submit',async e=>{
+ e.preventDefault();try{const cred=await signInWithEmailAndPassword(auth,$('adminEmail').value.trim(),$('adminPass').value),u=await getDoc(doc(db,'users',cred.user.uid));if(!u.exists()||u.data().role!=='Admin'){await signOut(auth);message('adminMsg','Access denied. Admin role must be exactly Admin in users/{uid}.');return}showDashboard();show('dashboard')}catch(err){message('adminMsg',err.message)}
+});
+function showDashboard(){$('adminArea').innerHTML=`<div class="card"><h3>Management Modules</h3><div class="grid">${Object.keys(moduleFields).map(n=>`<button class="primary" onclick="openModule('${n}')">${n[0].toUpperCase()+n.slice(1)}</button>`).join('')}</div></div><div id="moduleArea" class="card">Choose a module.</div>`}
+window.openModule=async name=>{
+ const fields=moduleFields[name];$('moduleArea').innerHTML=`<h3>${name} Management</h3><form id="moduleForm">${fields.map(f=>`<label>${f}</label><input name="${f}" ${['date','issueDate','paymentDate','enrollmentDate'].includes(f)?'type="date"':''} ${f==='resourceUrl'?'type="url"':''} required>`).join('')}<button class="primary">Save Record</button></form><div id="moduleMsg"></div><h3>Saved Records</h3><div id="recordList">Loading...</div>`;
+ $('moduleForm').onsubmit=async e=>{e.preventDefault();const data=Object.fromEntries(new FormData(e.target));try{await addDoc(collection(db,name),{...data,createdAt:serverTimestamp()});message('moduleMsg','Record saved.',true);e.target.reset();loadRecords(name)}catch(err){message('moduleMsg',err.message)}};
+ await loadRecords(name);
+};
+async function loadRecords(name){try{const snap=await getDocs(collection(db,name));$('recordList').innerHTML=snap.empty?'No records yet.':snap.docs.map(d=>`<div class="lesson">${Object.entries(d.data()).filter(([k])=>k!=='createdAt').map(([k,v])=>`<p><b>${esc(k)}:</b> ${esc(v)}</p>`).join('')}</div>`).join('')}catch(e){$('recordList').textContent='Unable to read records. Check Firestore rules.'}}
+window.logout=async()=>{await signOut(auth);show('home')};
+
+// Safe browser-based practical laboratories
+window.lab=(name,btn)=>{
+ document.querySelectorAll('#labTabs button').forEach(b=>b.classList.remove('active'));btn.classList.add('active');
  const views={
- web:`<h2>Web Coding Studio</h2><p>Write HTML, CSS and JavaScript, then run your page in the preview.</p><label>Code editor</label><textarea id="webCode" class="lab-editor" rows="10"><!DOCTYPE html>
-<html><head><style>body{font-family:Arial;padding:20px;background:#f0f7f2}h1{color:#075b36}</style></head><body><h1>Hello, Zacki Stackfix!</h1><p>My first practical webpage.</p><button onclick="document.querySelector('p').textContent='You clicked the button!'">Click me</button></body></html></textarea><button class="action" onclick="window.runWebCode()">Run Code</button><button class="gold" onclick="window.resetWebCode()">Reset Example</button><h3>Live Preview</h3><iframe id="webPreview" class="lab-preview" sandbox="allow-scripts"></iframe>`,
- network:`<h2>Network Address Lab</h2><p>Practise identifying IPv4 addresses and calculating basic subnet details for a private training network.</p><label>IPv4 address</label><input id="ipAddress" value="192.168.1.10" placeholder="192.168.1.10"><label>Prefix length (CIDR)</label><input id="ipPrefix" type="number" min="1" max="30" value="24"><button class="action" onclick="window.calculateNetwork()">Calculate Network</button><div id="networkResult" class="lab-output">Your network calculation will appear here.</div><p class="small">Training tool only. Use private example addresses; do not scan networks you do not own or administer.</p>`,
- cyber:`<h2>Cybersecurity Awareness Lab</h2><p>Review each sample message and identify whether it looks suspicious. This is a safe awareness exercise.</p><div class="lab-panel"><b>Sample message</b><p>“Your academy email will be closed today. Confirm your password immediately using this unfamiliar link or lose access.”</p><label>What should the student do?</label><select id="cyberAnswer"><option value="">Choose an answer</option><option value="a">Click the link and enter the password</option><option value="b">Do not click; verify through the official academy channel and report it</option><option value="c">Forward it to all classmates</option></select><button class="action" onclick="window.checkCyberAnswer()">Check Answer</button><div id="cyberFeedback" class="lab-output">Your feedback will appear here.</div></div><h3>Practical checklist</h3><ul><li>Check sender and domain carefully.</li><li>Never share passwords or one-time codes.</li><li>Verify unexpected requests through a trusted channel.</li><li>Report suspicious messages.</li></ul>`,
- ai:`<h2>AI Prompt Engineering Studio</h2><p>Build a clear prompt by defining a role, task, context and output format.</p><label>AI role</label><input id="aiRole" value="patient computer networking tutor"><label>Task</label><input id="aiTask" value="Explain the OSI model to a beginner"><label>Context and level</label><textarea id="aiContext" rows="3">The learner is a beginner at Zacki Stackfix Academy. Use simple language and practical examples.</textarea><label>Output format</label><select id="aiFormat"><option>Step-by-step lesson with examples and quiz</option><option>Short summary with bullet points</option><option>Practical project instructions</option></select><button class="action" onclick="window.buildPrompt()">Build My Prompt</button><div id="aiPromptResult" class="lab-output">Your prompt will appear here.</div><button class="gold" onclick="window.copyLabText('aiPromptResult')">Copy Prompt</button>`,
- cloud:`<h2>Cloud Architecture Design Lab</h2><p>Choose cloud services for a small academy and generate a simple architecture plan.</p><label>Workload</label><select id="cloudWorkload"><option value="school">Student records and learning portal</option><option value="files">Document and lesson-file storage</option><option value="website">Public academy website</option></select><label>Deployment model</label><select id="cloudModel"><option>Public cloud</option><option>Private cloud</option><option>Hybrid cloud</option></select><label>Priority</label><select id="cloudPriority"><option>Security and access control</option><option>Low cost</option><option>Easy scaling</option><option>Backup and recovery</option></select><button class="action" onclick="window.designCloud()">Generate Design</button><div id="cloudResult" class="lab-output">Your cloud design will appear here.</div>`,
- topology:`<h2>Network Topology Builder</h2><p>Select a topology and number of computers to see a simple classroom network layout.</p><label>Topology</label><select id="topologyType"><option>Star</option><option>Bus</option><option>Ring</option><option>Mesh</option></select><label>Number of computers (2–12)</label><input id="topologyCount" type="number" min="2" max="12" value="5"><button class="action" onclick="window.drawTopology()">Build Network</button><div id="topologyResult" class="lab-output">Your network diagram will appear here.</div>`
- };
- labWorkspace().innerHTML=views[name]||'<p>Choose a laboratory.</p>';
- if(name==='web')runWebCode(); if(name==='topology')drawTopology();
-}window.openLab=openLab;
-const starterWebCode=`<!DOCTYPE html>\n<html><head><style>body{font-family:Arial;padding:20px;background:#f0f7f2}h1{color:#075b36}</style></head><body><h1>Hello, Zacki Stackfix!</h1><p>My first practical webpage.</p><button onclick="document.querySelector('p').textContent='You clicked the button!'">Click me</button></body></html>`;
-function runWebCode(){const code=document.getElementById('webCode');const preview=document.getElementById('webPreview');if(code&&preview)preview.srcdoc=code.value;}window.runWebCode=runWebCode;
-function resetWebCode(){const e=document.getElementById('webCode');if(e)e.value=starterWebCode;runWebCode();}window.resetWebCode=resetWebCode;
-function calculateNetwork(){const ip=(document.getElementById('ipAddress')?.value||'').trim(),prefix=Number(document.getElementById('ipPrefix')?.value),parts=ip.split('.').map(Number),out=document.getElementById('networkResult');if(parts.length!==4||parts.some((n,i)=>!/^\d+$/.test(ip.split('.')[i])||n<0||n>255)||!Number.isInteger(prefix)||prefix<1||prefix>30){out.textContent='Enter a valid IPv4 address and prefix from /1 to /30.';return}const num=parts.reduce((a,n)=>((a*256)+n)>>>0,0)>>>0,mask=(0xffffffff<<(32-prefix))>>>0,network=(num&mask)>>>0,broadcast=(network|(~mask>>>0))>>>0;const fmt=n=>[n>>>24,(n>>>16)&255,(n>>>8)&255,n&255].join('.');out.textContent=`IP address: ${ip}\nSubnet mask: ${fmt(mask)}\nNetwork address: ${fmt(network)}\nBroadcast address: ${fmt(broadcast)}\nUsable host addresses: ${Math.max(0,2**(32-prefix)-2)}`;}window.calculateNetwork=calculateNetwork;
-function checkCyberAnswer(){const v=document.getElementById('cyberAnswer').value;document.getElementById('cyberFeedback').textContent=v==='b'?'Correct. This message uses urgency and asks for a password through an unfamiliar link. Do not click it; verify and report it.':v?'Not quite. Never enter credentials through an unexpected link. Choose the safe verification and reporting option.':'Choose an answer first.';}window.checkCyberAnswer=checkCyberAnswer;
-function buildPrompt(){const role=document.getElementById('aiRole').value.trim(),task=document.getElementById('aiTask').value.trim(),context=document.getElementById('aiContext').value.trim(),format=document.getElementById('aiFormat').value;document.getElementById('aiPromptResult').textContent=`Act as a ${role}.\n\nTask: ${task}.\n\nContext: ${context}\n\nOutput: ${format}.\n\nUse accurate information, explain unfamiliar terms and identify anything that needs verification.`;}window.buildPrompt=buildPrompt;
-function designCloud(){const w=document.getElementById('cloudWorkload').value,m=document.getElementById('cloudModel').value,p=document.getElementById('cloudPriority').value;const workload={school:'Web application + managed database + identity and access management + encrypted backups',files:'Object storage + role-based access + versioning + backup policy',website:'Static website hosting + domain + HTTPS + content delivery network'}[w];document.getElementById('cloudResult').textContent=`ACADEMY CLOUD DESIGN\nWorkload: ${w}\nDeployment: ${m}\nPriority: ${p}\nSuggested components: ${workload}\nControls: MFA for administrators, least-privilege permissions, encryption, logging and tested backups.\nNext step: compare provider pricing and confirm data-protection requirements before deployment.`;}window.designCloud=designCloud;
-function drawTopology(){const type=document.getElementById('topologyType'),count=document.getElementById('topologyCount'),out=document.getElementById('topologyResult');if(!type||!count||!out)return;const n=Number(count.value);if(!Number.isInteger(n)||n<2||n>12){out.textContent='Choose between 2 and 12 computers.';return}const t=type.value;let diagram='';if(t==='Star')diagram='                 [ROUTER]\n                    |\n                 [SWITCH]\n'+Array.from({length:n},(_,i)=>`      |---- [PC ${i+1}]`).join('\n');else if(t==='Bus')diagram='[PC 1]---[PC 2]---[PC 3]--- ... ---[PC '+n+']\n             Shared backbone cable';else if(t==='Ring')diagram=Array.from({length:n},(_,i)=>`[PC ${i+1}]`).join('---')+'---(back to PC 1)';else diagram='Each computer has a direct link to every other computer.\n'+Array.from({length:n},(_,i)=>`PC ${i+1}: ${n-1} links`).join('\n');out.textContent=`${t.toUpperCase()} TOPOLOGY\n${diagram}\n\nStudy task: explain one advantage and one limitation of this topology.`;}window.drawTopology=drawTopology;
-function copyLabText(id){const el=document.getElementById(id);if(el&&navigator.clipboard)navigator.clipboard.writeText(el.textContent).then(()=>alert('Copied.')).catch(()=>alert('Select and copy the text manually.'));else alert('Select and copy the text manually.');}window.copyLabText=copyLabText;
-function renderCourses(){const html=courses.map(c=>`<div class="card"><h3>${escapeHtml(c)}</h3><p>Guided lessons and practical skill development.</p><button class="action" onclick="window.openCourse('${c}')">Open Course</button><button class="gold" onclick="window.applyCourse('${c}')">Apply Now</button></div>`).join('');document.getElementById('homeCourses').innerHTML=html;document.getElementById('courseList').innerHTML=html;document.getElementById('regCourse').innerHTML='<option value="">Select a course</option>'+courses.map(c=>`<option value="${escapeHtml(c)}">${escapeHtml(c)}</option>`).join('')}
-function openCourse(course){const lessons=curriculum[course];if(!lessons)return;document.getElementById('courseDetailsContent').innerHTML=`<div class="card"><h2>${escapeHtml(course)}</h2><p>${lessons.length} lessons with explanations, key points and exercises.</p><h3>Course Lessons</h3>${lessons.map((l,i)=>`<div class="lesson-item"><strong>Lesson ${i+1}: ${escapeHtml(l[0])}</strong><p>${escapeHtml(l[1].slice(0,155))}...</p><button class="action" onclick="window.openLesson('${course}',${i})">Study Lesson</button></div>`).join('')}<button class="gold" onclick="window.applyCourse('${course}')">Apply for this Course</button></div>`;showPage('courseDetails')}window.openCourse=openCourse;
-function applyCourse(course){document.getElementById('regCourse').value=course;showPage('register')}window.applyCourse=applyCourse;
-function openLesson(course,index){const lessons=curriculum[course],l=lessons?.[index];if(!l)return;document.getElementById('lessonContent').innerHTML=`<button class="action" onclick="window.openCourse('${course}')">← Back to Lessons</button><div class="lesson-content"><p class="small">${escapeHtml(course)} · Lesson ${index+1} of ${lessons.length}</p><h2>${escapeHtml(l[0])}</h2><h3>Lesson Explanation</h3><p>${escapeHtml(l[1])}</p><h3>Key Learning Points</h3><ul>${l[2].map(p=>`<li>${escapeHtml(p)}</li>`).join('')}</ul><h3>Practical Class Exercise</h3><p>${escapeHtml(l[3])}</p><button class="action" ${index===0?'disabled':''} onclick="window.openLesson('${course}',${index-1})">Previous Lesson</button><button class="gold" ${index===lessons.length-1?'disabled':''} onclick="window.openLesson('${course}',${index+1})">Next Lesson</button></div>`;showPage('lessonPage')}window.openLesson=openLesson;
-renderCourses();
-// Student registration
- document.getElementById('registerForm').addEventListener('submit',async e=>{e.preventDefault();const fullName=document.getElementById('regName').value.trim(),email=document.getElementById('regEmail').value.trim().toLowerCase(),phone=document.getElementById('regPhone').value.trim(),course=document.getElementById('regCourse').value,password=document.getElementById('regPassword').value;if(!course){showMessage('registerMessage','Please select a course.');return}try{const cred=await createUserWithEmailAndPassword(auth,email,password);await setDoc(doc(db,'students',cred.user.uid),{fullName,email,phone,course,status:'Pending',createdAt:serverTimestamp()});await signOut(auth);e.target.reset();showMessage('registerMessage','Registration successful. You can now log in. Your application is pending approval.','success')}catch(err){showMessage('registerMessage',err.message)}});
-// Student login and portal
- document.getElementById('studentLoginForm').addEventListener('submit',async e=>{e.preventDefault();const email=document.getElementById('studentEmail').value.trim().toLowerCase(),password=document.getElementById('studentPassword').value;try{const cred=await signInWithEmailAndPassword(auth,email,password),snap=await getDoc(doc(db,'students',cred.user.uid));if(!snap.exists()){await signOut(auth);showMessage('studentMessage','No student record found for this account. Please contact the administrator.');return}const s=snap.data();document.getElementById('studentLoginForm').classList.add('hidden');const portal=document.getElementById('studentPortal');portal.classList.remove('hidden');portal.innerHTML=`<div class="card"><h2>Welcome, ${escapeHtml(s.fullName)}</h2><p><b>Email:</b> ${escapeHtml(s.email)}</p><p><b>Phone:</b> ${escapeHtml(s.phone)}</p><p><b>Course:</b> ${escapeHtml(s.course)}</p><p><b>Status:</b> ${escapeHtml(s.status)}</p><button class="action" onclick="window.openCourse('${s.course}')">Open My Course</button><button class="gold" onclick="window.studentLogout()">Logout</button></div><div class="card"><h3>My Enrollments</h3><div id="myEnrollments">Loading...</div></div><div class="card"><h3>My Results</h3><div id="myResults">Loading...</div></div><div class="card"><h3>Announcements</h3><div id="myAnnouncements">Loading...</div></div><div class="card"><h3>Learning Materials</h3><div id="myMaterials">Loading...</div></div>`;await loadStudentRecords(s.email)}catch(err){showMessage('studentMessage',err.message)}});
-async function loadStudentRecords(email){for(const name of ['enrollments','results']){const target=document.getElementById(name==='enrollments'?'myEnrollments':'myResults');try{const snap=await getDocs(query(collection(db,name),where('studentEmail','==',email)));target.innerHTML=snap.empty?'No records available yet.':snap.docs.map(d=>`<div class="lesson-item">${Object.entries(d.data()).filter(([k])=>k!=='createdAt').map(([k,v])=>`<p><b>${escapeHtml(labelName(k))}:</b> ${escapeHtml(v)}</p>`).join('')}</div>`).join('')}catch(err){target.textContent='Unable to load records.'}}await loadPublished('announcements','myAnnouncements');await loadPublished('materials','myMaterials')}
-async function loadPublished(name,targetId){const target=document.getElementById(targetId);try{const snap=await getDocs(query(collection(db,name),where('status','==','Published')));if(snap.empty){target.textContent='No published records yet.';return}target.innerHTML=snap.docs.map(d=>{const x=d.data();let link='';if(name==='materials'&&typeof x.resourceUrl==='string'){try{const u=new URL(x.resourceUrl);if(u.protocol==='https:')link=`<p><a href="${escapeHtml(u.href)}" target="_blank" rel="noopener noreferrer">Open learning material</a></p>`}catch{}}return `<div class="lesson-item"><b>${escapeHtml(x.title||'Untitled')}</b><p>${escapeHtml(x.message||x.description||'')}</p>${link}</div>`}).join('')}catch(err){target.textContent='Unable to load published items.'}}
-async function studentLogout(){await signOut(auth);document.getElementById('studentPortal').classList.add('hidden');document.getElementById('studentLoginForm').classList.remove('hidden');document.getElementById('studentLoginForm').reset();showPage('studentLogin')}window.studentLogout=studentLogout;
-// Administrator login: account must have users/{uid} with role exactly "Admin".
-document.getElementById('adminLoginForm').addEventListener('submit',async e=>{e.preventDefault();const email=document.getElementById('adminEmail').value.trim(),password=document.getElementById('adminPassword').value;try{const cred=await signInWithEmailAndPassword(auth,email,password),snap=await getDoc(doc(db,'users',cred.user.uid));if(!snap.exists()||snap.data().role!=='Admin'){await signOut(auth);showMessage('adminMessage','Administrator access denied.');return}e.target.reset();showDashboard();showPage('dashboard')}catch(err){showMessage('adminMessage',err.message)}});
-function showDashboard(){const buttons=Object.keys(modules).map(n=>`<button class="action" onclick="window.openModule('${n}')">${escapeHtml(labelName(n))}</button>`).join('');document.getElementById('dashboardContent').innerHTML=`<div class="card"><h3>Administrator Control Panel</h3><p>Select a module to manage academy records.</p>${buttons}</div><div id="moduleArea" class="card"><h3>Welcome Administrator</h3><p>Choose a module above.</p></div>`}
-async function openModule(name){if(!modules[name])return;currentModule=name;const fields=modules[name];document.getElementById('moduleArea').innerHTML=`<h3>${escapeHtml(labelName(name))} Management</h3><form id="moduleForm">${fields.map(f=>`<label>${escapeHtml(labelName(f))}</label><input name="${escapeHtml(f)}" ${['date','dateOfBirth','paymentDate','issueDate','enrollmentDate'].includes(f)?'type="date"':''} ${f==='resourceUrl'?'type="url"':''} required>`).join('')}<button class="action" type="submit">Save Record</button></form><div id="moduleMessage"></div><hr><h3>Saved Records</h3><div id="recordList">Loading...</div>`;document.getElementById('moduleForm').addEventListener('submit',saveModuleRecord);await loadModuleRecords(name)}window.openModule=openModule;
-async function saveModuleRecord(e){e.preventDefault();const record=Object.fromEntries(new FormData(e.target).entries());for(const k in record)record[k]=record[k].trim();try{await addDoc(collection(db,currentModule),{...record,createdAt:serverTimestamp()});e.target.reset();showMessage('moduleMessage','Record saved successfully.','success');await loadModuleRecords(currentModule)}catch(err){showMessage('moduleMessage',err.message)}}
-async function loadModuleRecords(name){const target=document.getElementById('recordList');try{const snap=await getDocs(collection(db,name));if(snap.empty){target.textContent='No records saved yet.';return}target.innerHTML=snap.docs.map(d=>`<div class="lesson-item">${Object.entries(d.data()).filter(([k])=>k!=='createdAt').map(([k,v])=>`<p><b>${escapeHtml(labelName(k))}:</b> ${escapeHtml(v)}</p>`).join('')}</div>`).join('')}catch(err){target.textContent='Unable to load records: '+err.message}}
-async function logout(){await signOut(auth);showPage('home')}window.logout=logout;
-</script>
-</body>
-</html>
+ web:`<h2>Web Coding Studio</h2><p>Write HTML, CSS and JavaScript, then run your page.</p><textarea id="webCode" class="editor"><!doctype html><html><head><style>body{font-family:Arial;padding:20px}h1{color:#101b35}</style></head><body><h1>Hello, Zacki Stackfix!</h1><p>My first web page.</p><button onclick="document.querySelector('p').textContent='It works!'">Click me</button></body></html></textarea><button class="primary" onclick="runCode()">Run Code</button><iframe id="webPreview" class="preview" sandbox="allow-scripts"></iframe>`,
+ network:`<h2>IPv4 Subnet Calculator</h2><label>IP address</label><input id="ip" value="192.168.1.10"><label>Prefix (1–30)</label><input id="prefix" type="number" min="1" max="30" value="24"><button class="primary" onclick="calcIP()">Calculate</button><div id="ipOut" class="labout">Results appear here.</div>`,
+ cyber:`<h2>Cybersecurity Awareness Exercise</h2><p>“Your school email will close today. Enter your password at this unfamiliar link.” What should you do?</p><select id="cyberChoice"><option value="">Choose</option><option value="wrong">Click and enter password</option><option value="right">Do not click; verify with official staff and report it</option><option value="wrong2">Forward it to everyone</option></select><button class="primary" onclick="checkCyber()">Check answer</button><div id="cyberOut" class="labout"></div><p>Never share passwords or one-time codes.</p>`,
+ ai:`<h2>AI Prompt Studio</h2><label>Role</label><input id="aiRole" value="friendly networking tutor"><label>Task</label><input id="aiTask" value="Explain the OSI model"><label>Context</label><textarea id="aiContext">Teach a beginner using simple examples.</textarea><label>Output format</label><select id="aiFormat"><option>Step-by-step lesson and quiz</option><option>Short bullet-point summary</option><option>Practical project guide</option></select><button class="primary" onclick="makePrompt()">Build prompt</button><div id="promptOut" class="labout"></div>`,
+ cloud:`<h2>Cloud Design Lab</h2><label>Workload</label><select id="cloudWork"><option>Student portal and records</option><option>Learning materials storage</option><option>Academy website</option></select><label>Deployment</label><select id="cloudType"><option>Public cloud</option><option>Private cloud</option><option>Hybrid cloud</option></select><button class="primary" onclick="cloudPlan()">Generate design</button><div id="cloudOut" class="labout"></div>`,
+ topology:`<h2>Network Topology Builder</h2><label>Topology</label><select id="topType"><option>Star</option><option>Bus</option><option>Ring</option><option>Mesh</option></select><label>Number of PCs (2–12)</label><input id="topCount" type="number" min="2" max="12" value="5"><button class="primary" onclick="drawTop()">Build diagram</button><div id="topOut" class="labout"></div>`
+ };$('labArea').innerHTML=views[name];
+};
+window.runCode=()=>{$('webPreview').srcdoc=$('webCode').value};
+window.calcIP=()=>{let ip=$('ip').value.trim(),p=+$('prefix').value,a=ip.split('.');if(a.length!==4||a.some(x=>!/^\d+$/.test(x)||+x<0||+x>255)||p<1||p>30){$('ipOut').textContent='Enter a valid IPv4 address and prefix.';return}let n=a.reduce((v,x)=>(v*256+(+x))>>>0,0)>>>0,m=(0xffffffff<<(32-p))>>>0,net=(n&m)>>>0,bc=(net|(~m>>>0))>>>0,fmt=x=>[x>>>24,(x>>>16)&255,(x>>>8)&255,x&255].join('.');$('ipOut').textContent=`Subnet mask: ${fmt(m)}\nNetwork: ${fmt(net)}\nBroadcast: ${fmt(bc)}\nUsable hosts: ${2**(32-p)-2}`};
+window.checkCyber=()=>{$('cyberOut').textContent=$('cyberChoice').value==='right'?'Correct. Verify using an official channel and report the message.':'Choose the safe option: do not click, verify and report.'};
+window.makePrompt=()=>{$('promptOut').textContent=`Act as a ${$('aiRole').value}.\nTask: ${$('aiTask').value}\nContext: ${$('aiContext').value}\nFormat: ${$('aiFormat').value}\nUse accurate information and explain limitations.`};
+window.cloudPlan=()=>{$('cloudOut').textContent=`ACADEMY CLOUD PLAN\nWorkload: ${$('cloudWork').value}\nDeployment: ${$('cloudType').value}\nSuggested services: application hosting, managed database or object storage, identity and access management, encrypted backups, monitoring and HTTPS.\nApply least-privilege access and multi-factor authentication for administrators.`};
+window.drawTop=()=>{let n=+$('topCount').value,t=$('topType').value;if(n<2||n>12){$('topOut').textContent='Choose 2 to 12 computers.';return}let d=t==='Star'?'Router → Switch → '+Array.from({length:n},(_,i)=>'PC '+(i+1)).join(', '):t==='Bus'?Array.from({length:n},(_,i)=>'PC '+(i+1)).join(' — '):t==='Ring'?Array.from({length:n},(_,i)=>'PC '+(i+1)).join(' — ')+' — back to PC 1':'Every computer has a direct connection to every other computer.';$('topOut').textContent=t+' topology\n'+d+'\n\nTask: state one advantage and one limitation.'};
+lab('web',$('labTabs').firstElementChild);
+</script></body></html>
