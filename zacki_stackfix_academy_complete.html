@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Zacki Stackfix Academy</title>
+<style>
+:root{--navy:#101b35;--gold:#d4af37;--bg:#f4f6fa;--ink:#172033}
+*{box-sizing:border-box}body{margin:0;font-family:Arial,sans-serif;background:var(--bg);color:var(--ink)}
+header{background:var(--navy);color:white;padding:16px 5%;display:flex;justify-content:space-between;align-items:center;gap:12px;flex-wrap:wrap}
+header h1{font-size:20px;margin:0}nav{display:flex;gap:5px;flex-wrap:wrap}button{border:0;border-radius:7px;padding:11px 14px;font-weight:bold;cursor:pointer}
+nav button{background:transparent;color:white}.primary{background:var(--navy);color:white}.gold{background:var(--gold);color:#171717}
+main{max-width:1150px;margin:auto;padding:22px 4%}.page{display:none}.page.active{display:block}
+.hero{background:linear-gradient(120deg,#101b35,#263e6b);color:white;text-align:center;padding:48px 20px;border-radius:14px}
+.card{background:white;padding:20px;border-radius:11px;margin:14px 0;box-shadow:0 2px 12px #0000000d}
+.grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:14px}
+input,select,textarea{width:100%;padding:12px;border:1px solid #ccd2dc;border-radius:7px;margin:7px 0 14px;font-size:15px}
+label{font-weight:bold}.muted{color:#697386;font-size:13px}.msg{padding:12px;border-radius:7px;margin:10px 0}.ok{background:#e4f6e9;color:#14532d}.err{background:#fee2e2;color:#991b1b}
+.hidden{display:none!important}.lesson{padding:14px;border-left:4px solid var(--gold);background:#fff;margin:10px 0;border-radius:7px}
+.labout{white-space:pre-wrap;background:#101b35;color:#eaf0ff;padding:14px;border-radius:8px;overflow:auto}.editor{min-height:190px;font-family:monospace}.preview{width:100%;height:260px;border:1px solid #ccd2dc;background:white}
+.tabs{display:flex;gap:7px;flex-wrap:wrap;margin:15px 0}.tabs button{background:#e5e9f1;color:#101b35}.tabs button.active{background:#101b35;color:white}
+table{border-collapse:collapse;width:100%;background:white;display:block;overflow:auto}td,th{border:1px solid #ddd;padding:9px;text-align:left}
+footer{text-align:center;background:var(--navy);color:white;padding:25px;margin-top:30px}
+@media(max-width:650px){header{display:block}nav{margin-top:12px}.hero{padding:32px 15px}}
+</style>
+</head>
+<body>
+<header><h1>ZACKI STACKFIX ACADEMY</h1><nav>
+<button onclick="show('home')">Home</button><button onclick="show('courses')">Courses</button><button onclick="show('labs')">Practical Labs</button><button onclick="show('register')">Register</button><button onclick="show('login')">Student Login</button><button onclick="show('adminLogin')">Admin</button>
+</nav></header>
+<main>
+<section id="home" class="page active"><div class="hero"><h2>Welcome to Zacki Stackfix Academy</h2><p>Learn Technology. Build Skills. Create Smart Solutions.</p><button class="gold" onclick="show('courses')">Explore Courses</button> <button onclick="show('register')">Register Now</button></div><h2>Our Programmes</h2><div id="homeCourses" class="grid"></div></section>
+<section id="courses" class="page"><h2>Available Courses</h2><div id="courseList" class="grid"></div></section>
+<section id="courseDetail" class="page"><button class="primary" onclick="show('courses')">← Back</button><div id="courseContent"></div></section>
+<section id="register" class="page"><div class="card"><h2>Student Registration</h2><div id="regMsg"></div><form id="regForm">
+<label>Full name</label><input id="regName" required><label>Email</label><input id="regEmail" type="email" required><label>Phone number</label><input id="regPhone" required><label>Select course</label><select id="regCourse" required></select><label>Password (minimum 6 characters)</label><input id="regPass" type="password" minlength="6" required><button class="primary">Create Account</button></form><p class="muted">New accounts are activated automatically and enrolled in the selected course.</p></div></section>
+<section id="login" class="page"><div class="card"><h2>Student Login</h2><div id="loginMsg"></div><form id="loginForm"><label>Email</label><input id="loginEmail" type="email" required><label>Password</label><input id="loginPass" type="password" required><button class="primary">Login</button></form><div id="studentPortal" class="hidden"></div></div></section>
+<section id="adminLogin" class="page"><div class="card"><h2>Administrator Login</h2><div id="adminMsg"></div><form id="adminForm"><label>Email</label><input id="adminEmail" type="email" required><label>Password</label><input id="adminPass" type="password" required><button class="primary">Login as Admin</button></form></div></section>
+<section id="dashboard" class="page"><h2>Administrator Dashboard</h2><div id="adminArea"></div><button class="primary" onclick="logout()">Logout</button></section>
+<section id="labs" class="page"><div class="hero"><h2>Digital Practical Laboratory</h2><p>Practice technology skills directly in your browser.</p></div><div class="tabs" id="labTabs">
+<button class="active" onclick="lab('web',this)">Web Coding</button><button onclick="lab('network',this)">Network Lab</button><button onclick="lab('cyber',this)">Cybersecurity</button><button onclick="lab('ai',this)">AI Prompt Studio</button><button onclick="lab('cloud',this)">Cloud Design</button><button onclick="lab('topology',this)">Topology Builder</button></div><div id="labArea" class="card"></div></section>
+</main><footer><h3>Zacki Stackfix Academy</h3><p>Technology Education • Practical Skills • Innovation</p><p>© 2026 Zacki Stackfix Academy</p></footer>
+<script type="module">
+import {initializeApp} from 'https://www.gstatic.com/firebasejs/10.14.1/firebase-app.js';
+import {getAuth,createUserWithEmailAndPassword,signInWithEmailAndPassword,signOut} from 'https://www.gstatic.com/firebasejs/10.14.1/firebase-auth.js';
+import {getFirestore,doc,setDoc,getDoc,addDoc,collection,getDocs,query,where,serverTimestamp} from 'https://www.gstatic.com/firebasejs/10.14.1/firebase-firestore.js';
+
+const firebaseConfig={apiKey:'AIzaSyBNHpKN8PyzlPCki83WqUBl5GIHP7vstnk',authDomain:'zacki-stackfix-academy.firebaseapp.com',projectId:'zacki-stackfix-academy',storageBucket:'zacki-stackfix-academy.firebasestorage.app',messagingSenderId:'800401275558',appId:'1:800401275558:web:9d65b9b30719a0f029d267',measurementId:'G-C77GMHRYKX'};
+const app=initializeApp(firebaseConfig),auth=getAuth(app),db=getFirestore(app);
+const courses=['AI Development','Cybersecurity','Network Security','Computer Networking','Cloud Computing','Web Development'];
+const lessons={
+'AI Development':['Introduction to AI','Data and Machine Learning Basics','Prompt Engineering','Building a Simple AI Solution','Responsible AI'],
+'Cybersecurity':['Introduction to Cybersecurity','Online Safety and Account Protection','Malware and Phishing Awareness','Data Privacy','Ethical Cybersecurity'],
+'Network Security':['Network Security Fundamentals','Authentication and Access Control','Firewalls and Encryption','Threat Awareness','Monitoring and Incident Response'],
+'Computer Networking':['Introduction to Networks','Network Types and Topologies','Networking Devices and Cabling','IP Addressing, DNS and DHCP','OSI and TCP/IP Models','Network Troubleshooting'],
+'Cloud Computing':['Introduction to Cloud Computing','IaaS, PaaS and SaaS','Cloud Deployment Models','Virtualisation and Cloud Networking','Cloud Security and Cost Management'],
+'Web Development':['How Websites Work','HTML Structure','CSS and Responsive Design','JavaScript Fundamentals','Publishing and Website Safety']
+};
+const $=id=>document.getElementById(id);
+window.show=id=>{document.querySelectorAll('.page').forEach(p=>p.classList.remove('active'));$(id)?.classList.add('active');window.scrollTo(0,0)};
+const esc=s=>String(s??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+function message(id,msg,ok=false){$(id).innerHTML=`<div class="msg ${ok?'ok':'err'}">${esc(msg)}</div>`}
+function renderCourses(){
+ const html=courses.map(c=>`<div class="card"><h3>${esc(c)}</h3><p>${lessons[c].length} guided lessons with practical exercises.</p><button class="primary" onclick="openCourse('${c}')">View Course</button><button class="gold" onclick="applyCourse('${c}')">Register</button></div>`).join('');
+ $('homeCourses').innerHTML=html;$('courseList').innerHTML=html;$('regCourse').innerHTML='<option value="">Choose course</option>'+courses.map(c=>`<option>${esc(c)}</option>`).join('');
+}
+window.openCourse=c=>{$('courseContent').innerHTML=`<div class="card"><h2>${esc(c)}</h2><p>Course curriculum</p>${lessons[c].map((l,i)=>`<div class="lesson"><b>Lesson ${i+1}: ${esc(l)}</b><p>Study the key concepts, review real-world examples, complete the practical task and record what you learned.</p><p><b>Practical task:</b> Prepare a short exercise or project demonstrating this topic.</p></div>`).join('')}<button class="gold" onclick="applyCourse('${c}')">Register for this course</button></div>`;show('courseDetail')};
+window.applyCourse=c=>{$('regCourse').value=c;show('register')};renderCourses();
+
+$('regForm').addEventListener('submit',async e=>{
+ e.preventDefault();const fullName=$('regName').value.trim(),email=$('regEmail').value.trim().toLowerCase(),phone=$('regPhone').value.trim(),course=$('regCourse').value,password=$('regPass').value;
+ try{
+  const cred=await createUserWithEmailAndPassword(auth,email,password);
+  const admissionNumber='ZSA/'+new Date().getFullYear()+'/'+Date.now().toString().slice(-6);
+  const student={fullName,email,phone,course,admissionNumber,status:'Active',createdAt:serverTimestamp()};
+  await setDoc(doc(db,'students',cred.user.uid),student);
+  await addDoc(collection(db,'enrollments'),{studentName:fullName,studentEmail:email,admissionNumber,course,enrollmentDate:new Date().toISOString().slice(0,10),status:'Active',createdAt:serverTimestamp()});
+  await signOut(auth);e.target.reset();message('regMsg',`Registration successful. Admission number: ${admissionNumber}. Your account is Active. Log in to access your course.`,true);
+ }catch(err){message('regMsg',err.message)}
+});
+$('loginForm').addEventListener('submit',async e=>{
+ e.preventDefault();try{
+  const cred=await signInWithEmailAndPassword(auth,$('loginEmail').value.trim().toLowerCase(),$('loginPass').value),snap=await getDoc(doc(db,'students',cred.user.uid));
+  if(!snap.exists()){await signOut(auth);message('loginMsg','No student record found for this account.');return}
+  const s=snap.data();$('loginForm').classList.add('hidden');const p=$('studentPortal');p.classList.remove('hidden');
+  p.innerHTML=`<div class="card"><h2>Welcome, ${esc(s.fullName)}</h2><p><b>Admission number:</b> ${esc(s.admissionNumber||'Not assigned')}</p><p><b>Email:</b> ${esc(s.email)}</p><p><b>Course:</b> ${esc(s.course)}</p><p><b>Status:</b> ${esc(s.status||'Active')}</p><button class="primary" onclick="openCourse('${esc(s.course)}')">Open My Course</button><button class="gold" onclick="studentLogout()">Logout</button></div><div class="card"><h3>My Enrollments</h3><div id="myEnrollments">Loading...</div></div><div class="card"><h3>My Results</h3><div id="myResults">Loading...</div></div><div class="card"><h3>My Certificates</h3><div id="myCertificates">Loading...</div></div><div class="card"><h3>Announcements</h3><div id="myAnnouncements">Loading...</div></div><div class="card"><h3>Learning Materials</h3><div id="myMaterials">Loading...</div></div>`;
+  await loadStudentData(s);
+ }catch(err){message('loginMsg',err.message)}
+});
+async function loadStudentData(s){
+ for(const [col,target] of [['enrollments','myEnrollments'],['results','myResults'],['certificates','myCertificates']]){
+  try{const snap=await getDocs(query(collection(db,col),where('studentEmail','==',s.email)));$(target).innerHTML=snap.empty?'No records available.':snap.docs.map(d=>{const x=d.data();if(col==='certificates'&&String(x.status).toLowerCase()==='issued')return `<div class="lesson"><b>${esc(x.course||'Certificate')}</b><p>Certificate No: ${esc(x.certificateNumber||'')}</p><p>Issue date: ${esc(x.issueDate||'')}</p><button class="gold" onclick="downloadCertificate('${esc(x.certificateNumber)}','${esc(x.studentName||s.fullName)}','${esc(x.course||s.course)}','${esc(x.issueDate||'')}','${esc(x.admissionNumber||s.admissionNumber||'')}')">Download Certificate</button></div>`;return `<div class="lesson">${Object.entries(x).filter(([k])=>k!=='createdAt').map(([k,v])=>`<p><b>${esc(k)}:</b> ${esc(v)}</p>`).join('')}</div>`}).join('')}catch(e){$(target).textContent='Unable to load records. Check database permissions.'}
+ }
+ for(const [col,target] of [['announcements','myAnnouncements'],['materials','myMaterials']]){
+  try{const snap=await getDocs(query(collection(db,col),where('status','==','Published')));$(target).innerHTML=snap.empty?'No published items yet.':snap.docs.map(d=>{const x=d.data();let link='';if(x.resourceUrl){try{const u=new URL(x.resourceUrl);if(u.protocol==='https:')link=`<p><a href="${esc(u.href)}" target="_blank" rel="noopener">Open material</a></p>`}catch{}}return `<div class="lesson"><b>${esc(x.title||'')}</b><p>${esc(x.message||x.description||'')}</p>${link}</div>`}).join('')}catch(e){$(target).textContent='Unable to load.'}
+ }
+}
+window.studentLogout=async()=>{await signOut(auth);$('studentPortal').classList.add('hidden');$('loginForm').classList.remove('hidden');$('loginForm').reset();show('login')};
+window.downloadCertificate=(number,name,course,date,admission)=>{
+ const w=window.open('','_blank');if(!w){alert('Allow pop-ups to print your certificate.');return}
+ const safe=esc;w.document.write(`<!doctype html><html><head><title>Certificate</title><style>body{font-family:Georgia,serif;padding:28px;background:#f4f4f4}.sheet{background:white;border:12px double #d4af37;text-align:center;padding:55px;color:#101b35;max-width:900px;margin:auto}.school{font:bold 28px Arial}.gold{color:#a17c18;letter-spacing:3px}.name{font-size:36px;font-weight:bold;border-bottom:2px solid #d4af37;display:inline-block;padding:12px}.course{font-size:24px}.meta{display:flex;justify-content:space-between;margin-top:50px;font:13px Arial}@media print{body{padding:0;background:white}.sheet{max-width:none;min-height:85vh}}</style></head><body><div class="sheet"><div class="school">ZACKI STACKFIX ACADEMY</div><p class="gold">LEARN TECHNOLOGY • BUILD SKILLS • CREATE SMART SOLUTIONS</p><h1>CERTIFICATE OF COMPLETION</h1><p>This certificate is proudly presented to</p><div class="name">${safe(name)}</div><p>for successfully completing the course</p><p class="course"><b>${safe(course)}</b></p><p>at Zacki Stackfix Academy.</p><div class="meta"><span>Admission: ${safe(admission)}</span><span>Certificate: ${safe(number)}</span><span>Date: ${safe(date)}</span></div><p style="margin-top:60px">_________________________<br>Academy Director</p></div><script>window.onload=()=>window.print()<\\/script></body></html>`);w.document.close();
+};
+
+const moduleFields={students:['fullName','admissionNumber','email','phone','course','status'],teachers:['fullName','teacherID','email','phone','subject','status'],departments:['departmentName','departmentCode','description','status'],programmes:['programmeName','programmeCode','department','duration','qualification','status'],courses:['courseName','courseCode','description','duration','status'],enrollments:['studentName','studentEmail','admissionNumber','course','enrollmentDate','status'],results:['studentName','studentEmail','admissionNumber','course','score','grade','session','remark'],attendance:['studentName','admissionNumber','course','date','attendanceStatus'],fees:['studentName','admissionNumber','amount','paid','balance','paymentDate','status'],certificates:['studentName','studentEmail','admissionNumber','course','certificateNumber','issueDate','status'],announcements:['title','message','date','status'],materials:['title','course','description','resourceUrl','status']};
+$('adminForm').addEventListener('submit',async e=>{
+ e.preventDefault();try{const cred=await signInWithEmailAndPassword(auth,$('adminEmail').value.trim(),$('adminPass').value),u=await getDoc(doc(db,'users',cred.user.uid));if(!u.exists()||u.data().role!=='Admin'){await signOut(auth);message('adminMsg','Access denied. Admin role must be exactly Admin in users/{uid}.');return}showDashboard();show('dashboard')}catch(err){message('adminMsg',err.message)}
+});
+function showDashboard(){$('adminArea').innerHTML=`<div class="card"><h3>Management Modules</h3><div class="grid">${Object.keys(moduleFields).map(n=>`<button class="primary" onclick="openModule('${n}')">${n[0].toUpperCase()+n.slice(1)}</button>`).join('')}</div></div><div id="moduleArea" class="card">Choose a module.</div>`}
+window.openModule=async name=>{
+ const fields=moduleFields[name];$('moduleArea').innerHTML=`<h3>${name} Management</h3><form id="moduleForm">${fields.map(f=>`<label>${f}</label><input name="${f}" ${['date','issueDate','paymentDate','enrollmentDate'].includes(f)?'type="date"':''} ${f==='resourceUrl'?'type="url"':''} required>`).join('')}<button class="primary">Save Record</button></form><div id="moduleMsg"></div><h3>Saved Records</h3><div id="recordList">Loading...</div>`;
+ $('moduleForm').onsubmit=async e=>{e.preventDefault();const data=Object.fromEntries(new FormData(e.target));try{await addDoc(collection(db,name),{...data,createdAt:serverTimestamp()});message('moduleMsg','Record saved.',true);e.target.reset();loadRecords(name)}catch(err){message('moduleMsg',err.message)}};
+ await loadRecords(name);
+};
+async function loadRecords(name){try{const snap=await getDocs(collection(db,name));$('recordList').innerHTML=snap.empty?'No records yet.':snap.docs.map(d=>`<div class="lesson">${Object.entries(d.data()).filter(([k])=>k!=='createdAt').map(([k,v])=>`<p><b>${esc(k)}:</b> ${esc(v)}</p>`).join('')}</div>`).join('')}catch(e){$('recordList').textContent='Unable to read records. Check Firestore rules.'}}
+window.logout=async()=>{await signOut(auth);show('home')};
+
+// Safe browser-based practical laboratories
+window.lab=(name,btn)=>{
+ document.querySelectorAll('#labTabs button').forEach(b=>b.classList.remove('active'));btn.classList.add('active');
+ const views={
+ web:`<h2>Web Coding Studio</h2><p>Write HTML, CSS and JavaScript, then run your page.</p><textarea id="webCode" class="editor"><!doctype html><html><head><style>body{font-family:Arial;padding:20px}h1{color:#101b35}</style></head><body><h1>Hello, Zacki Stackfix!</h1><p>My first web page.</p><button onclick="document.querySelector('p').textContent='It works!'">Click me</button></body></html></textarea><button class="primary" onclick="runCode()">Run Code</button><iframe id="webPreview" class="preview" sandbox="allow-scripts"></iframe>`,
+ network:`<h2>IPv4 Subnet Calculator</h2><label>IP address</label><input id="ip" value="192.168.1.10"><label>Prefix (1–30)</label><input id="prefix" type="number" min="1" max="30" value="24"><button class="primary" onclick="calcIP()">Calculate</button><div id="ipOut" class="labout">Results appear here.</div>`,
+ cyber:`<h2>Cybersecurity Awareness Exercise</h2><p>“Your school email will close today. Enter your password at this unfamiliar link.” What should you do?</p><select id="cyberChoice"><option value="">Choose</option><option value="wrong">Click and enter password</option><option value="right">Do not click; verify with official staff and report it</option><option value="wrong2">Forward it to everyone</option></select><button class="primary" onclick="checkCyber()">Check answer</button><div id="cyberOut" class="labout"></div><p>Never share passwords or one-time codes.</p>`,
+ ai:`<h2>AI Prompt Studio</h2><label>Role</label><input id="aiRole" value="friendly networking tutor"><label>Task</label><input id="aiTask" value="Explain the OSI model"><label>Context</label><textarea id="aiContext">Teach a beginner using simple examples.</textarea><label>Output format</label><select id="aiFormat"><option>Step-by-step lesson and quiz</option><option>Short bullet-point summary</option><option>Practical project guide</option></select><button class="primary" onclick="makePrompt()">Build prompt</button><div id="promptOut" class="labout"></div>`,
+ cloud:`<h2>Cloud Design Lab</h2><label>Workload</label><select id="cloudWork"><option>Student portal and records</option><option>Learning materials storage</option><option>Academy website</option></select><label>Deployment</label><select id="cloudType"><option>Public cloud</option><option>Private cloud</option><option>Hybrid cloud</option></select><button class="primary" onclick="cloudPlan()">Generate design</button><div id="cloudOut" class="labout"></div>`,
+ topology:`<h2>Network Topology Builder</h2><label>Topology</label><select id="topType"><option>Star</option><option>Bus</option><option>Ring</option><option>Mesh</option></select><label>Number of PCs (2–12)</label><input id="topCount" type="number" min="2" max="12" value="5"><button class="primary" onclick="drawTop()">Build diagram</button><div id="topOut" class="labout"></div>`
+ };$('labArea').innerHTML=views[name];
+};
+window.runCode=()=>{$('webPreview').srcdoc=$('webCode').value};
+window.calcIP=()=>{let ip=$('ip').value.trim(),p=+$('prefix').value,a=ip.split('.');if(a.length!==4||a.some(x=>!/^\d+$/.test(x)||+x<0||+x>255)||p<1||p>30){$('ipOut').textContent='Enter a valid IPv4 address and prefix.';return}let n=a.reduce((v,x)=>(v*256+(+x))>>>0,0)>>>0,m=(0xffffffff<<(32-p))>>>0,net=(n&m)>>>0,bc=(net|(~m>>>0))>>>0,fmt=x=>[x>>>24,(x>>>16)&255,(x>>>8)&255,x&255].join('.');$('ipOut').textContent=`Subnet mask: ${fmt(m)}\nNetwork: ${fmt(net)}\nBroadcast: ${fmt(bc)}\nUsable hosts: ${2**(32-p)-2}`};
+window.checkCyber=()=>{$('cyberOut').textContent=$('cyberChoice').value==='right'?'Correct. Verify using an official channel and report the message.':'Choose the safe option: do not click, verify and report.'};
+window.makePrompt=()=>{$('promptOut').textContent=`Act as a ${$('aiRole').value}.\nTask: ${$('aiTask').value}\nContext: ${$('aiContext').value}\nFormat: ${$('aiFormat').value}\nUse accurate information and explain limitations.`};
+window.cloudPlan=()=>{$('cloudOut').textContent=`ACADEMY CLOUD PLAN\nWorkload: ${$('cloudWork').value}\nDeployment: ${$('cloudType').value}\nSuggested services: application hosting, managed database or object storage, identity and access management, encrypted backups, monitoring and HTTPS.\nApply least-privilege access and multi-factor authentication for administrators.`};
+window.drawTop=()=>{let n=+$('topCount').value,t=$('topType').value;if(n<2||n>12){$('topOut').textContent='Choose 2 to 12 computers.';return}let d=t==='Star'?'Router → Switch → '+Array.from({length:n},(_,i)=>'PC '+(i+1)).join(', '):t==='Bus'?Array.from({length:n},(_,i)=>'PC '+(i+1)).join(' — '):t==='Ring'?Array.from({length:n},(_,i)=>'PC '+(i+1)).join(' — ')+' — back to PC 1':'Every computer has a direct connection to every other computer.';$('topOut').textContent=t+' topology\n'+d+'\n\nTask: state one advantage and one limitation.'};
+lab('web',$('labTabs').firstElementChild);
+</script></body></html>
