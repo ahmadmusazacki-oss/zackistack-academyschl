@@ -1,137 +1,128 @@
+
 <!DOCTYPE html>
 <html lang="en">
-<head>
+<head><style>
+@font-face {
+  font-family: "Optimistic";
+  font-style: normal;
+  font-weight: 400 600;
+  font-display: swap;
+  src: url("/fonts/OptimisticAI_VF_Optimized.woff2") format("woff2");
+}
+@font-face {
+  font-family: "Optimistic Mono";
+  font-style: normal;
+  font-weight: 400;
+  font-display: swap;
+  src: url("/fonts/OptimisticMono_W_TextRegular.woff2") format("woff2");
+}
+:where(html) {
+  font-family: "Optimistic", system-ui, sans-serif;
+}
+:where(code, pre, kbd, samp) {
+  font-family: "Optimistic Mono", ui-monospace, monospace;
+}
+</style>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>ZACKI STACKFIX ACADEMY - Learn Technology. Build Skills. Create Smart Solutions.</title>
+<title>ZACKI STACKFIX ACADEMY - Registration & Payment</title>
 <style>
-*{margin:0;padding:0;box-sizing:border-box;font-family:Arial,Helvetica,sans-serif}
-body{background:#f6f8fb;color:#111}
-header{background:#0b2a4a;color:#fff;padding:14px 18px;display:flex;align-items:center;justify-content:space-between;position:sticky;top:0;z-index:10;flex-wrap:wrap;gap:10px}
-.logo{display:flex;align-items:center;gap:10px;font-weight:900;font-size:20px}
-.logo img{width:44px;height:44px;border-radius:50%;background:#fff;object-fit:cover}
-.logo span{color:#ffc107}
-nav{display:flex;gap:14px;flex-wrap:wrap;align-items:center}
-nav a{color:#fff;text-decoration:none;font-weight:700;font-size:14px}
-nav a.partnership{background:#ffc107;color:#0b2a4a;padding:9px 14px;border-radius:20px}
-.hero{background:linear-gradient(135deg,#0b2a4a,#0e5aa8);color:#fff;padding:48px 18px;text-align:center}
-.hero h1{font-size:36px;line-height:1.2;margin-bottom:12px}
-.hero p{font-size:17px;opacity:.95;max-width:700px;margin:0 auto 20px}
-.btn{display:inline-block;padding:13px 20px;border-radius:25px;text-decoration:none;font-weight:800;margin:5px}
-.btn-yellow{background:#ffc107;color:#0b2a4a}
-.btn-white{background:#fff;color:#0b2a4a}
-.btn-outline{border:2px solid #fff;color:#fff}
-section{padding:36px 18px;max-width:1000px;margin:0 auto}
-h2{margin-bottom:14px;color:#0b2a4a}
-.grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:14px}
-.card{background:#fff;border-radius:14px;padding:18px;box-shadow:0 4px 14px rgba(0,0,0,.08)}
-.card h3{margin-bottom:8px}
-.card p{font-size:14px;line-height:1.5}
-input,select{width:100%;padding:12px;margin:7px 0;border:1px solid #ccc;border-radius:8px}
-button{width:100%;padding:13px;background:#0b2a4a;color:#fff;border:0;border-radius:8px;font-weight:800;cursor:pointer}
-.note{font-size:13px;color:#555;margin-top:8px}
-footer{background:#0b2a4a;color:#fff;text-align:center;padding:26px 18px}
-footer a{color:#ffc107;font-weight:800;text-decoration:none}
-.whatsapp{position:fixed;right:16px;bottom:16px;background:#25D366;color:#fff;padding:13px 16px;border-radius:30px;text-decoration:none;font-weight:800;box-shadow:0 6px 18px rgba(0,0,0,.25);z-index:20}
-@media(max-width:600px){.hero h1{font-size:28px} header{justify-content:center;text-align:center}}
+*{box-sizing:border-box;margin:0;padding:0;font-family:Arial,sans-serif}
+body{background:#0f0f0f;color:#fff}
+header{background:linear-gradient(90deg,#b8860b,#006400,#b22222);padding:22px;text-align:center}
+header h1{font-size:28px;letter-spacing:1px}
+header p{opacity:.9;margin-top:6px}
+.wrap{max-width:900px;margin:20px auto;padding:0 16px}
+.card{background:#1a1a1a;border:1px solid #b8860b;border-radius:14px;padding:20px;margin-bottom:18px}
+h2{color:#ffd700;margin-bottom:10px}
+label{display:block;margin:12px 0 5px;font-weight:bold}
+input,select,textarea{width:100%;padding:12px;border-radius:8px;border:1px solid #444;background:#111;color:#fff}
+.row{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+@media(max-width:600px){.row{grid-template-columns:1fr}}
+.pay-box{background:#fff8dc;color:#111;border-radius:12px;padding:16px;margin-top:14px}
+.pay-box h3{color:#b8860b}
+.price{font-size:26px;font-weight:900;margin:8px 0}
+.btn{display:block;text-align:center;text-decoration:none;padding:15px;border-radius:10px;font-weight:900;margin-top:12px}
+.btn-gold{background:#ffd700;color:#000}
+.btn-green{background:#25D366;color:#fff}
+.btn-red{background:#b22222;color:#fff}
+.small{font-size:13px;opacity:.8;margin-top:8px}
+.steps li{margin:8px 0}
+.badge{display:inline-block;background:#ffd700;color:#000;padding:5px 12px;border-radius:20px;font-weight:800;font-size:13px}
 </style>
 </head>
 <body>
-
 <header>
-  <div class="logo">
-    <!-- LOGO: replace logo.png with your real logo file name if different -->
-    <img src="logo.png" alt="Zacki Stackfix Academy Logo" onerror="this.style.display='none'">
-    ZACKI <span>STACKFIX</span> ACADEMY
-  </div>
-  <nav>
-    <a href="index.html">Home</a>
-    <a href="#programmes">Programmes</a>
-    <a href="#courses">Courses</a>
-    <a href="#register">Register</a>
-    <a href="#login">Login</a>
-    <a class="partnership" href="partnership.html">🤝 Partnership</a>
-  </nav>
+<h1>ZACKI STACKFIX ACADEMY</h1>
+<p>Learn • Build • Earn — Practical AI & Tech Skills</p>
+<p><span class="badge">REGISTRATION NOW OPEN</span></p>
 </header>
+<div class="wrap">
 
-<div class="hero">
-  <h1>Welcome to Zacki Stackfix Academy</h1>
-  <p>Learn Technology. Build Skills. Create Smart Solutions.</p>
-  <a class="btn btn-yellow" href="#register">Student Registration</a>
-  <a class="btn btn-white" href="#courses">View Courses</a><br>
-  <a class="btn btn-outline" href="partnership.html">🤝 Become a Partner</a>
+<div class="card">
+<h2>1. Choose Your Course</h2>
+<label>Select Course</label>
+<select id="course">
+<option>AI Fundamentals - Beginner</option>
+<option>Prompt Engineering & ChatGPT Mastery</option>
+<option>AI for Business & Content Creation</option>
+<option>Web Development (HTML, CSS, JavaScript)</option>
+<option>Python & AI Automation</option>
+<option>Graphics Design with AI</option>
+<option>Video Editing & Faceless Content Creation</option>
+<option>Digital Marketing with AI</option>
+</select>
+<label>Full Name</label>
+<input id="name" placeholder="e.g. Ahmad Musa">
+<div class="row">
+<div><label>WhatsApp Number</label><input id="phone" placeholder="e.g. 09034528400"></div>
+<div><label>Email</label><input id="email" placeholder="you@email.com"></div>
+</div>
+<label>Class / Level</label>
+<select><option>Beginner</option><option>Intermediate</option><option>Advanced</option></select>
 </div>
 
-<section id="programmes">
-  <h2>Our Programmes</h2>
-  <div class="grid">
-    <div class="card"><h3>💻 Computer & ICT</h3><p>Computer basics, Microsoft Office, internet skills and digital literacy for beginners to advanced learners.</p></div>
-    <div class="card"><h3>🌐 Web Development</h3><p>Learn HTML, CSS, JavaScript and how to build real websites for clients and businesses.</p></div>
-    <div class="card"><h3>🎨 Graphics & Design</h3><p>Design flyers, logos, school materials and social media designs with professional tools.</p></div>
-    <div class="card"><h3>📱 Digital Skills</h3><p>Social media, online business, content creation and practical skills for today's world.</p></div>
-  </div>
-</section>
+<div class="card">
+<h2>2. Pay To Register</h2>
+<p>Pay your registration fee to secure your seat. Your certificate will only unlock after you finish the course.</p>
+<div class="pay-box">
+<h3>💳 PAYMENT DETAILS</h3>
+<div class="price">Registration Fee: ₦5,000</div>
+<p><b>Bank Transfer:</b><br>
+Bank: <b>[Your Bank Name]</b><br>
+Account Name: <b>Ahmad Musa Zački</b><br>
+Account Number: <b>[Your Account Number]</b></p>
+<p style="margin-top:10px"><b>After payment:</b> Click the green button below and send your payment screenshot on WhatsApp to confirm.</p>
+<a class="btn btn-gold" href="#" onclick="payNow();return false;">PAY NOW - I HAVE TRANSFERRED</a>
+<a class="btn btn-green" href="https://wa.me/2349034528400?text=Hello%20ZACKI%20STACKFIX%20ACADEMY%2C%20I%20have%20paid%20my%20registration%20fee.%20My%20name%20is%3A%20" target="_blank">✅ CONFIRM PAYMENT ON WHATSAPP</a>
+<a class="btn btn-red" href="mailto:ahmadmusazacki@gmail.com?subject=ZACKI%20STACKFIX%20ACADEMY%20Registration&body=Full%20Name:%0AWhatsApp:%0ACourse:%0APayment%20Reference:">📧 CONFIRM BY EMAIL</a>
+<p class="small">Replace [Your Bank Name] and [Your Account Number] with your real details before uploading to GitHub.</p>
+</div>
+<ol class="steps" style="margin-top:14px">
+<li><b>Step 1:</b> Transfer ₦5,000 to the account above</li>
+<li><b>Step 2:</b> Click Confirm Payment on WhatsApp and send screenshot</li>
+<li><b>Step 3:</b> You will receive your student login + course access</li>
+</ol>
+</div>
 
-<section id="courses">
-  <h2>Available Courses</h2>
-  <div class="grid">
-    <div class="card"><h3>Basic Computer</h3><p>For beginners. Learn computer, typing, files and Office.</p><p><b>WhatsApp to Enroll</b></p></div>
-    <div class="card"><h3>Web Design</h3><p>Build websites from scratch and publish them online.</p></div>
-    <div class="card"><h3>Graphics Design</h3><p>Learn design and create professional flyers and logos.</p></div>
-    <div class="card"><h3>Computer Programming</h3><p>Start coding and build real projects step by step.</p></div>
-  </div>
-</section>
+<div class="card">
+<h2>3. Complete Registration</h2>
+<label>Payment Reference / Sender Name</label>
+<input placeholder="e.g. Transfer from Musa - Ref 123456">
+<label>Upload Proof (mention in WhatsApp)</label>
+<textarea placeholder="I have sent my receipt on WhatsApp to 09034528400"></textarea>
+<a class="btn btn-gold" href="https://wa.me/2349034528400?text=Hello%2C%20I%20want%20to%20register%20for%20ZACKI%20STACKFIX%20ACADEMY" target="_blank">SUBMIT REGISTRATION VIA WHATSAPP - 09034528400</a>
+<p class="small" style="text-align:center">Questions? WhatsApp: 09034528400 | Website: https://ahmadmusazacki-oss.github.io/zackistack-academyschl/</p>
+</div>
 
-<section id="register">
-  <h2>Student Registration</h2>
-  <div class="card">
-    <label>Full name</label><input type="text" placeholder="Full name">
-    <label>Email</label><input type="email" placeholder="Email">
-    <label>Phone number</label><input type="tel" placeholder="Phone number">
-    <label>Select course</label>
-    <select><option>Basic Computer</option><option>Web Design</option><option>Graphics Design</option><option>Computer Programming</option></select>
-    <label>Password (minimum 6 characters)</label><input type="password" placeholder="Password">
-    <button>Register</button>
-    <p class="note">New accounts are activated automatically and enrolled in the selected course.</p>
-  </div>
-</section>
-
-<section id="login">
-  <h2>Student Login</h2>
-  <div class="card">
-    <label>Email</label><input type="email" placeholder="Email">
-    <label>Password</label><input type="password" placeholder="Password">
-    <button>Login</button>
-  </div>
-  <h2 style="margin-top:26px">Administrator Login</h2>
-  <div class="card">
-    <label>Email</label><input type="email" placeholder="Admin Email">
-    <label>Password</label><input type="password" placeholder="Password">
-    <button>Admin Login</button>
-  </div>
-</section>
-
-<section>
-  <h2>Administrator Dashboard</h2>
-  <div class="card"><p>Admin can manage students, courses, registrations and academy content after login.</p></div>
-  <h2 style="margin-top:26px">Digital Practical Laboratory</h2>
-  <div class="card"><p>Practice technology skills directly in your browser.</p></div>
-</section>
-
-<section style="text-align:center;background:#fff;border-radius:14px">
-  <h2>🤝 Partner With Zacki Stackfix Academy</h2>
-  <p style="margin-bottom:16px">Schools, businesses and individuals can partner with us for training, school portals, websites and digital skills programmes.</p>
-  <a class="btn btn-yellow" href="partnership.html">View Partnership Portal →</a>
-</section>
-
-<footer>
-  <p><b>ZACKI STACKFIX ACADEMY</b></p>
-  <p>WhatsApp: <a href="https://wa.me/2349034528400">09034528400</a></p>
-  <p style="margin-top:10px"><a href="partnership.html">🤝 Partnership Portal</a> | <a href="index.html">Home</a></p>
-  <p style="margin-top:10px;font-size:13px;opacity:.8">© 2026 Zacki Stackfix Academy. All rights reserved.</p>
-</footer>
-
-<a class="whatsapp" href="https://wa.me/2349034528400?text=Hello%20Zacki%20Stackfix%20Academy%2C%20I%20want%20to%20enquire">💬 WhatsApp Us</a>
-
-</body>
+</div>
+<script>
+function payNow(){
+  var name=document.getElementById('name').value||'';
+  var course=document.getElementById('course').value||'';
+  var msg='Hello ZACKI STACKFIX ACADEMY, I have paid my registration fee. My name is: '+name+' Course: '+course;
+  window.open('https://wa.me/2349034528400?text='+encodeURIComponent(msg),'_blank');
+}
+</script>
+<script>(function(){var loc=location.href.replace(/#.*$/,"");var ATTR_NAMES=["data-product-id","data-productid","data-product_id","product-id","productid","product_id","data-source-entity-id","source-entity-id","source_entity_id","data-product","data-metadata","data-meta"];var DATASET_KEYS=["productId","productid","product_id","sourceEntityId","sourceentityid","source_entity_id","product","metadata","meta"];function readProductId(value){if(typeof value!=="string"||value.length===0)return null;if(/^[0-9]{6,}$/.test(value))return value;var match=value.match(/(?:product(?:_|-)?id|source(?:_|-)?entity(?:_|-)?id)["'=:\s]+([0-9]{6,})/i);return match?match[1]:null}function extractProductId(start){for(var node=start;node&&node!==document.body;node=node.parentElement){for(var i=0;i<ATTR_NAMES.length;i++){var attrValue=node.getAttribute&&node.getAttribute(ATTR_NAMES[i]);var attrProductId=readProductId(attrValue);if(attrProductId)return attrProductId}var dataset=node.dataset||null;if(dataset){for(var j=0;j<DATASET_KEYS.length;j++){var dataValue=dataset[DATASET_KEYS[j]];var dataProductId=readProductId(dataValue);if(dataProductId)return dataProductId}}}return null}function isInlineMediaSlotElement(node){return !!(node&&node.getAttribute&&node.getAttribute("data-clippy-inline-media-slot")!==null)}function findInlineMediaSlot(start){for(var node=start;node&&node!==document.body;node=node.parentElement){if(isInlineMediaSlotElement(node))return node}return null}function readInlineMediaUrl(node){if(!node)return null;return node.getAttribute&&((node.getAttribute("data-clippy-inline-media-url")||node.getAttribute("data-url")||node.getAttribute("data_url")))||node.href||null}function stripHash(url){return String(url).replace(/#.*$/,"")}function urlsMatch(a,b){if(!a||!b)return false;try{return stripHash(new URL(a,loc).href)===stripHash(new URL(b,loc).href)}catch(_){return stripHash(a)===stripHash(b)}}function isFirstPartyReelUrl(value){try{var url=new URL(value,loc);if(url.protocol!=="https:")return false;var host=url.hostname.toLowerCase();var supported=host==="instagram.com"||host.endsWith(".instagram.com")||host==="facebook.com"||host.endsWith(".facebook.com");return supported&&/\/reels?\//i.test(url.pathname)}catch(_){return false}}function isInlineMediaUrlClick(node,href){var slot=findInlineMediaSlot(node);if(!slot)return false;var slotUrl=readInlineMediaUrl(slot);if(slotUrl)return urlsMatch(href,slotUrl);return isFirstPartyReelUrl(href)}function findDataHref(start){for(var node=start;node&&node!==document.body;node=node.parentElement){if(node.getAttribute){var href=node.getAttribute("data-href")||node.getAttribute("data-url");if(href)return{href:href,node:node}}}return null}var nativeOpen=window.open;window.open=function(url){if(parent!==window&&typeof url==="string"&&/^https?:\/\//.test(url)){parent.postMessage({type:"ecto:usercontent-link-click",href:url},"*");return null}return nativeOpen?nativeOpen.apply(window,arguments):null};document.addEventListener("click",function(e){var target=e.target instanceof Element?e.target:null;if(!target)return;if(parent===window)return;var a=target.closest?target.closest("a[href]"):null;if(a&&a.href&&/^https?:\/\//.test(a.href)&&a.href.replace(/#.*$/,"")!==loc){if(isInlineMediaUrlClick(a,a.href))return;var productId=extractProductId(target)||extractProductId(a);if(productId){e.preventDefault();parent.postMessage({type:"ecto-artifact-link-click",productId:productId},"*");return}e.preventDefault();parent.postMessage({type:"ecto:usercontent-link-click",href:a.href},"*");return}var dataHref=findDataHref(target);if(dataHref&&/^https?:\/\//.test(dataHref.href)&&dataHref.href.replace(/#.*$/,"")!==loc){if(isInlineMediaUrlClick(dataHref.node,dataHref.href))return;e.preventDefault();parent.postMessage({type:"ecto:usercontent-link-click",href:dataHref.href},"*")}},true)})();</script><script>(function(){var FOCUS_TYPE="ecto:artifact-focus-request";var CLOSE_TYPE="ecto:artifact-close-request";function focusArtifactDocument(){var body=document.body;if(!body)return;try{window.focus();}catch(e){}if(!body.hasAttribute("tabindex"))body.setAttribute("tabindex","-1");try{body.focus({preventScroll:true});}catch(e){try{body.focus();}catch(e2){}}}window.addEventListener("message",function(event){if(event.source!==window.parent)return;var data=event.data;if(!data||typeof data!=="object"||data.type!==FOCUS_TYPE)return;if(document.readyState==="loading"){document.addEventListener("DOMContentLoaded",focusArtifactDocument,{once:true});return;}focusArtifactDocument();});window.addEventListener("keydown",function(event){if(event.key!=="Escape")return;window.setTimeout(function(){if(event.defaultPrevented)return;window.parent.postMessage({type:CLOSE_TYPE},"*");},0);});})();</script></body>
 </html>
